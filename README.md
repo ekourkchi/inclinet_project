@@ -45,6 +45,60 @@ https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/incNET_model_
 ![Fig4](https://user-images.githubusercontent.com/13570487/135530054-987a33b4-8207-4e4a-8f3b-8e98a7525f85.png)
 *Fig. 4: Examples of augmented images. IIn each panel, the PGC ID of the galaxy is in cyan. Red is the classification label and magenta is the image pass-band, i.e. g, r, i and c, where c stands for RGB.*
 
+## Inclination Labels
+
+We have investigated the capability of the human eye to evaluate galaxy inclinations. We begin with the advantage that a substantial fraction of spiral inclinations are well defined by axial ratios. These good cases give us a grid of standards of wide morphological types over the inclination range that particularly interests us of 45-90 degrees. The challenge is to fit random target galaxies into the grid, thus providing estimates of their inclinations.
+
+
+![Fig5](https://user-images.githubusercontent.com/13570487/135530392-123f7689-8e11-4af3-9e9e-c64810351af8.png)
+*Fig. 5: Users compare each target galaxy with a set of standard galaxies to evaluate their inclinations.*
+
+
+To obtain a large enough sample for an ML project, we have manually labelled ~20,000 spiral galaxies using an online GUI, [Galaxy Inclination Zoo(http://edd.ifa.hawaii.edu/inclination/)], in collaboration with amateur astronomers across the world. In this graphical interface, we use the colorful images provided by SDSS as well as the g, r, i band images generated for our photometry program. These latter are presented in black-and-white after re-scaling by the asinh function to differentiate more clearly the internal structures of galaxies. The inclination of standard galaxies were initially measured based on their axial ratios. Each galaxy is compared with the standard galaxies in two steps (see Fig. 5). First, the user locates the galaxy among nine standard galaxies sorted by their inclinations ranging between 45 degrees and 90 degrees in increments of 5 degrees. In step two, the same galaxy is compared with nine other standard galaxies whose inclinations are one degree apart and cover the 5 degree interval found in the first step. At the end, the inclination is calculated by averaging the inclinations of the standard galaxies on the left/right-side of the target galaxy. In the first step, if a galaxy is classified to be more face-on than 45, it is flagged and step two is skipped. We take the following precautions to minimize user dependent and independent biases:
+
+- We round the resulting inclinations to the next highest or smallest integer values chosen randomly.
+- At each step, standard galaxies are randomly drawn with an option for users to change them randomly to verify their work or to compare galaxies with similar structures.
+- To increase the accuracy of the results, we catalog the median of at least three different measurements performed by different users.
+- Users may reject galaxies for various reasons and leave comments with the aim of avoiding dubious cases.
+
+The uncertainties on the measured inclinations are estimated based on the statistical scatter in the reported values by different users. Fig. 6 illustrates the distribution of labels, where `J` and `F` labels reject and face-on galaxies, respectively. Numbers indicate the inclination angle of galaxies from face-on in degrees. As seen, out of 19,907, ~22% are rejected for various astronomical reasons and ~8% are face-on thus not acceptable for our original research purpose.
+
+
+![Fig6](https://user-images.githubusercontent.com/13570487/135530645-28f40a5f-79e0-4d01-8307-2ce91d2d1e0c.png)
+*Fig. 6: The distribution of the labels across the sample*
+
+
+### Comparin users' adjusted measurements against each other
+
+This comparison is very similar to A/B testing. The only difference here is that we divide users into two different groups, A and B. Then, we build the median tables for these groups and compare the inclination of the common galaxies of both tables. This way, we are able to evaluate the statistical uncertainties on the measurements.
+Fig. 7 compares the results of two different groups of users. Evidently, on average, the agreement between two different people about their inclination measurements using our methodology is ~3 degrees. Any machine learning tool that has almost the similar performance is acceptable for our purpose.
+As expected, we see smaller scatter at larger inclination values towards the edge-on galaxies. Practically, it is much easier for users to recognize and evaluate edge-on galaxies, which fortunately is in the favor of our astronomy research, because our sample mainly consists of edge-on galaxies. On the other hand, more scatter about less inclined galaxies (that indicate larger uncertainty on the measured values) and having much smaller number of evaluated galaxies in that region makes it hard for machine learning algorithms to learn from data and have accurate predictions when galaxies tend to be more face-on (smaller inclination values).
+
+![Fig7](https://user-images.githubusercontent.com/13570487/135530717-544e2580-b940-494e-8063-638b09e70f4c.png)
+*Fig. 7: Median of the evaluated inclinations by two different groups of users for ∼2000 galaxies.*
+
+**Notebook**
+
+For more detail on how we have processed the ground truth results in order to avoid any human related mistakes or biases please refer to this notebook: https://github.com/ekourkchi/inclinet_project/blob/main/data_extraction/incNET_dataClean.ipynb 
+
+# Models
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ![GIZ_demo](https://user-images.githubusercontent.com/13570487/85185022-6c752b00-b24f-11ea-9f9a-9d1d007f4fb7.png)
 
