@@ -118,6 +118,78 @@ This model is comparable to Model4, in terms of complexity, although the number 
 ![model6_table](https://user-images.githubusercontent.com/13570487/132305223-fd946618-d7aa-40da-b21b-096345804366.png)
 
 
+# Training
+
+Here, we train a VGG model using the augmented data. The data augmentation process has been explained above. The output augmented data has been stored on disk for the purpose of the following analysis.
+
+## Regression, determining inclinations
+
+128x128 images are used for this analysis, which are in grayscale (g,r,i filter) or colorful (RGB). All images are presented in 3 channels. For grayscale images, all three channels are the same. Inclinations range from 45 to 90 degrees. Half of the grayscale images have black background, i.e. galaxies and stars are in white color. In half of the grayscale cases, objects are in black on white background. Half of the sample is in grayscale, and the other half is in grayscale. The augmentation process has been forced to generate images that cover the entire inclinations uniformly. We adopt the “Adam” optimizer, and the “Mean Square Error” for the loss function, and we keep track of the MSE and MAE metric during the training process.
+
+### Notebooks
+
+- Model 4: https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Trainer_04.ipynb
+- Model 5: 
+https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Trainer_05.ipynb
+- Model 6:
+https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Trainer_06.ipynb
+
+### Challenges
+
+With 128x128 images, and adding augmentation, the size of the required memory to open up the entire augmented sample is out of the capability of the available machines. Thus, we resolved the problem by saving the training sample in 50 separate batches that are already randomized in any way. Each step of the training process starts with loading the corresponding batch, reconstructing the CNN as it was generated in the previous iteration, and advancing the training process for one more step. At the end of that repetition, we store a snapshot of the network weights for the next training step.
+
+### Notes
+
+- Since we are dealing with a large training sample, we need to repeat updating the network weights for many steps to cover all training batches several times
+- Over-fitting sometimes helps to minimize the prediction-measurement bias
+
+### Pros
+
+- We can generate as many training galaxies as required without being worry about the memory size
+- We can stop the training process at any point and continue the process from where it is left. This helps is the process crashes due to the lack of enough memory that happens if other irrelevant processes clutter the system
+- We are able to constantly monitor the training process and make decisions as it goes on
+
+### Cons
+
+- This process is slow. The bottleneck is the i/o process, not training and updating the weight numbers of the network.
+
+### Plotting the evaluation metrics
+
+As illustrated in Fig. 9, the training process can be stopped about the iteration #1000, however a little bit of over training helps to remove the prediction-measurement bias and reduce the size of fluctuations in the metrics.
+
+
+![Fig9](https://user-images.githubusercontent.com/13570487/135531689-799b0abd-0ba5-4da6-8122-10cec42aab48.png)
+*Fig. 9: Regression evaluations metrics vs. training epochs*
+
+## Classification, determining good/bad galaxy images
+
+Here, we train a VGG model using the augmented data. Data augmentation has been done separately in another code and the output data has been stored on disk for the purpose of the following analysis.
+
+128x128 images are used for this analysis, which are in grayscale (g,r,i filter) or colorful (RGB). All images are presented in 3 channels. For grayscale images, all three channels are the same. Labels are either 0 or 1.
+
+
+- 0: galaxy images with well defined and measured inclinations, that are used for the distance analysis in a separate research
+- 1: galaxies that are flagged to be either face-on (inclinations less than 45 degrees from face-on), or to have poor image quality. Deformed galaxies, non-spiral galaxies, confused images, multiple galaxies in a field, galaxy images that are contaminated with bright foreground stars have been also flagged and have label 1.
+
+We adopt the same network trained to determine inclinations. Here for binary classification, the last layer activation function has been changed to Softmax with sparse categorical entropy as the loss function. We keep track of the accuracy metric during the training process.
+
+**Objective:** The goal is to train a network for automatic rejection of unaccepted galaxies. These galaxies can be later manually studied or investigated by human users.
+
+### Notebooks:
+
+- Model 4: https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Trainer_04-binary.ipynb
+- Model 5:
+https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Trainer_05-binary.ipynb
+- Model 6:
+https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Trainer_06-binary.ipynb
+
+
+### Plotting the evaluation metrics
+According to Fig. 10, after about 200 iterations, the loss function of the training sample decreases while the performance gets worse on the test sample. This means that over-training the network after this point doesn't improve the outcome.
+
+![Fig10](https://user-images.githubusercontent.com/13570487/135531763-7dc87f62-243a-4c87-a3df-9992344e1518.png)
+*Fig. 10: classification evaluations metrics vs. training epochs*
+
 
 
 
