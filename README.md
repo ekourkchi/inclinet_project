@@ -59,7 +59,7 @@ We have investigated the capability of the human eye to evaluate galaxy inclinat
 *Fig. 5: Users compare each target galaxy with a set of standard galaxies to evaluate their inclinations.*
 
 
-To obtain a large enough sample for an ML project, we have manually labelled ~20,000 spiral galaxies using an online GUI, [Galaxy Inclination Zoo(http://edd.ifa.hawaii.edu/inclination/)], in collaboration with amateur astronomers across the world. In this graphical interface, we use the colorful images provided by SDSS as well as the g, r, i band images generated for our photometry program. These latter are presented in black-and-white after re-scaling by the asinh function to differentiate more clearly the internal structures of galaxies. The inclination of standard galaxies were initially measured based on their axial ratios. Each galaxy is compared with the standard galaxies in two steps (see Fig. 5). First, the user locates the galaxy among nine standard galaxies sorted by their inclinations ranging between 45 degrees and 90 degrees in increments of 5 degrees. In step two, the same galaxy is compared with nine other standard galaxies whose inclinations are one degree apart and cover the 5 degree interval found in the first step. At the end, the inclination is calculated by averaging the inclinations of the standard galaxies on the left/right-side of the target galaxy. In the first step, if a galaxy is classified to be more face-on than 45, it is flagged and step two is skipped. We take the following precautions to minimize user dependent and independent biases:
+To obtain a large enough sample for an ML project, we have manually labelled ~20,000 spiral galaxies using an online GUI, [Galaxy Inclination Zoo](http://edd.ifa.hawaii.edu/inclination/), in collaboration with amateur astronomers across the world. In this graphical interface, we use the colorful images provided by SDSS as well as the g, r, i band images generated for our photometry program. These latter are presented in black-and-white after re-scaling by the asinh function to differentiate more clearly the internal structures of galaxies. The inclination of standard galaxies were initially measured based on their axial ratios. Each galaxy is compared with the standard galaxies in two steps (see Fig. 5). First, the user locates the galaxy among nine standard galaxies sorted by their inclinations ranging between 45 degrees and 90 degrees in increments of 5 degrees. In step two, the same galaxy is compared with nine other standard galaxies whose inclinations are one degree apart and cover the 5 degree interval found in the first step. At the end, the inclination is calculated by averaging the inclinations of the standard galaxies on the left/right-side of the target galaxy. In the first step, if a galaxy is classified to be more face-on than 45, it is flagged and step two is skipped. We take the following precautions to minimize user dependent and independent biases:
 
 - We round the resulting inclinations to the next highest or smallest integer values chosen randomly.
 - At each step, standard galaxies are randomly drawn with an option for users to change them randomly to verify their work or to compare galaxies with similar structures.
@@ -286,7 +286,8 @@ The entire ML process is illustrated in Fig. 17. Left red block is the model pro
 
 
 ![Fig17](https://user-images.githubusercontent.com/13570487/135533596-e47b7f1f-e1ed-4c5a-b182-c7d979dc3b57.png)
-*Fig.17: The ML process plan. *
+
+*Fig.17: The ML process plan.*
 
 1. **The Model Production Unit:** This module consists of 4 main components:
 
@@ -325,11 +326,11 @@ Visit this folder on gitHub for the codes: https://github.com/ekourkchi/inclinet
    - Data is presented in the form of images. Non-square images are padded to have square dimensions, and they are resized to the appropriate shape (128x128)
    - Labels are the spatial inclinations of spiral galaxies from face-on 
 - pipeline.sh: This bash script runs the pipeline end-to-end from the data preparation to building the CNN models
-   - data_prep.py: This code is mainly used to downsize (downsample) images that are stored in a specified folder.
-   - data_compress.py: compressing images of a folder that are all in the same size
-   - data_split.py: taking the npz file at each filter, and splitting them into training and testing batches. 10% of all galaxies with inclinations greater than 45 degrees are set aside for the testing purpose. To perform extra analysis (like bagging), sub-samples of the training set are generated, with the size of 67% of the entire training sample size. Sub-samples overlap as each contains 2/3 of the data drawn randomly from the main sample, whereas the test sample doesn't overlap with any of the training sub-samples.
-   - data_augment_uniform.py: Generating augmented samples with uniform distribution of inclination. The augmented samples are stored as batches for a later use in the training process. The training batches are generated using this code. Each batch consists of the same number of grayscale and colorful images. Half of the grayscale images are inverted to avoid overfitting
-   - batch_training_regr.py: Training VGG models using the augmented data. Advancing the training process at each step consists of reconstruction of the model as it is at the end of the previous step. The steps of the training process are as follows
+   - `data_prep.py`: This code is mainly used to downsize (downsample) images that are stored in a specified folder.
+   - `data_compress.py`: compressing images of a folder that are all in the same size
+   - `data_split.py`: taking the npz file at each filter, and splitting them into training and testing batches. 10% of all galaxies with inclinations greater than 45 degrees are set aside for the testing purpose. To perform extra analysis (like bagging), sub-samples of the training set are generated, with the size of 67% of the entire training sample size. Sub-samples overlap as each contains 2/3 of the data drawn randomly from the main sample, whereas the test sample doesn't overlap with any of the training sub-samples.
+   - `data_augment_uniform.py`: Generating augmented samples with uniform distribution of inclination. The augmented samples are stored as batches for a later use in the training process. The training batches are generated using this code. Each batch consists of the same number of grayscale and colorful images. Half of the grayscale images are inverted to avoid overfitting
+   - `batch_training_regr.py`: Training VGG models using the augmented data. Advancing the training process at each step consists of reconstruction of the model as it is at the end of the previous step. The steps of the training process are as follows
       - Reading the compressed files that holds the corresponding batch
       - Training the model for one epoch (moving forward just for 1 iteration)
       - Updating a JSON file that holds the network metrics at the end of the training epoch
@@ -635,20 +636,9 @@ where `/path/to/image/galaxy.jpg` would be replaced by the name of the galaxy im
         }
  ```
 
-##  7. <a name='Documentation'></a>Documentation
+# Documentation
 
 The full documentation of this application is [available here](https://edd.ifa.hawaii.edu/static/html/index.html).
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Acknowledgments
