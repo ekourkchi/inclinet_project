@@ -205,6 +205,7 @@ To get better understanding of the model performance, we plot the difference bet
 - **Right Panel:** Same as the left panel, with adjusted predictions, $i_{pc}$, that is calculated using $i_{pc}=(i_p+b)/(1-m)$.
 
 ![Fig11](https://user-images.githubusercontent.com/13570487/135532545-021d74c6-4cfb-49bf-886f-227d096e3bb7.png)
+
 *Fig. 11: Discrepancy between predictions and actual values for mode 4 with the test sample*
 
 **Note:** The root mean square of the prediction-measurements differences is ~4o. The similar metric is ~2.6o when we compare the measured values of two groups of the human users. This means our model performs slightly worse than human, and most of that poor performance is attributed to the outliers and features (like data noise, point sources, stellar spikes, poor images, etc.) with not enough data coverage.
@@ -212,6 +213,7 @@ To get better understanding of the model performance, we plot the difference bet
 In a similar way Fig. 12 shows the performance of all models. As seen, in almost all cases the prediction bias is at minimum and not that significant. Each panel displays the results of a model, and is labeled with the name of the corresponding model. RMS and MAE denote “Root Mean Square” and “Mean Absolute Error” of the deviations of i about zero. At first glance, Model #5 seems to have the best performance, which does not come as a surprise, because it is the most complicated model that we have considered. In general, the differences in the performance of different models is not that significant.
 
 ![Fig12](https://user-images.githubusercontent.com/13570487/135532635-2afc04c5-d7b5-43e0-9c6f-25d1c5e62454.png)
+
 *Fig. 12: The performance of all studied models using the test sample. Each panel illustrates the results of a model labeled as `model<n>(m)`, with `<n>` being the model number which can be 4, 5, and 6.  `<m>` denotes the “flavor of the model”.*
 
 ## Visualizing the outliers
@@ -226,6 +228,7 @@ Some cases are interesting:
 - Case #37 has been ruined in the data reduction process, when the telescope data has been preprocessed.
 
 ![Fig13](https://user-images.githubusercontent.com/13570487/135532840-bcfb91f7-8f99-4ed9-ac52-1137e2e68c4c.png)
+
 *Fig. 13: Example of outliers for Model 4*
 
 
@@ -244,9 +247,11 @@ We don't see any significant differences between mean and median, so there is no
 As inferred from Figures 14 and 15, when the results of all models are averaged out, we get the best performance. RMS and MAE of deviations of the average of all models from the measured values are 3.09 and 2.12 [deg], respectively, which is comparable with the performance of humans.
 
 ![Fig14](https://user-images.githubusercontent.com/13570487/132321203-7362280a-8213-4cd8-80a5-efa53188e2e3.png)
+
 *Fig. 14: Median of all predictions*
 
 ![Fig15](https://user-images.githubusercontent.com/13570487/132321248-75d78df5-0bda-48b8-b75e-884851007a59.png)
+
 *Fig. 15: Mean of all predictions*
 
 ## Evaluation of the Binary Models
@@ -259,6 +264,7 @@ Three different metrics have been considered to evaluate the classification mode
 where `TP` and `FP` are true and false positives, respectively. In a similar way, `TN` and `FN` are true and false negatives, respectively. Precision measures how many of the positive predictions are actually positive. Recall indicates how many of the actuala positive cases have been detected correctly. Accuracy shows the fractions of correct predictions in the entire sample. Fig. 16 visualizes these metrics for different classification models that we considered in this project.
 
 ![Fig16](https://user-images.githubusercontent.com/13570487/132331083-961596a8-99a0-442e-bd57-7cda7bbcae6c.png)
+
 *Fig. 16: The performance metrics of the various classification models in this study*
 
 Evidently, model #5 has a better overall performance compared to the other two models, which is expected knowing that model #5 is the most complicated one.
