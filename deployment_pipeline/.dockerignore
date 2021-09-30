@@ -1,0 +1,3 @@
+# Ignore the following file, folder and links from the build of docker image
+*static
+*/static*

@@ -1,0 +1,1298 @@
+<html>
+
+
+<head>
+    <title>RESIZING AN IMAGE WITHIN A DIV</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://edd.ifa.hawaii.edu/buttons/buttons.css" />
+    <link rel="stylesheet" href="https://edd.ifa.hawaii.edu/inclination/css/bootstrap.min.css" charset="ISO-8859-1" type="text/css"/>
+    <script type="text/javascript" src="https://edd.ifa.hawaii.edu/inclination/js/showdown.min.js"></script>
+
+    
+<style>    
+    table#t01 {
+        border: 2px solid black;
+        border-collapse: collapse;
+        border-spacing: 5px;
+        }
+
+body.busy-cursor {
+    cursor: progress;
+    }
+
+body { height: 100%;  weight: 100%; }
+
+body {
+   
+    min-width: 800px;
+   
+    }
+
+._help {
+    margin: auto;
+    width: 100%;
+    min-width: 600px;
+    border: 0px solid #ccc;
+    padding: 10px;
+    margin-bottom:20px;
+    margin-top:10px;
+    margin-right:50px;
+    margin-left:30px;
+    text-align:justify;
+}
+
+#container {
+   min-height:100%;
+   position:relative;
+}
+#header {
+   box-sizing: border-box;
+   padding-left: 20px;
+   background:#660000;
+   height:25px;
+   color: white;
+   margin-bottom:5px;
+   padding: 0px 5px 2px;
+}
+
+#footer {
+   box-sizing: border-box;
+   position:fixed;
+   bottom:0;
+   left: 0;
+   width:100%;
+   height:20px;
+   background: #660000;
+   font-size : 10pt;
+   color:white;
+}
+
+a.footerlink{
+   color:white;
+   font-size : 10pt;
+   text-decoration:underline;
+}
+a.footerlink:hover {
+   color:yellow;
+ 
+}
+
+.floating-menu {
+    font-family: sans-serif;
+    background:  #800000;
+    padding: 5px;
+    width: 200px;
+    z-index: 100;
+    position: fixed;
+    margin-top: 20px;
+  }
+  .floating-menu a,
+  .floating-menu h3 {
+    font-size: 0.9em;
+    display: block;
+    margin: 0 0.5em;
+    color: white;
+  }
+  .floating-menu a:hover{
+      color:yellow;
+      }
+ 
+  .floating-menu li {
+      color: white;
+      }
+  .floating-menu li:hover {
+      color: yellow;
+      }
+ 
+ 
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+ 
+#incImage {
+  display: inline-block;
+  margin: 10px;
+  border: 1px solid black;
+  overflow: hidden;         /*  clip the excess when child gets bigger than parent  */
+}
+
+ 
+#galimage {
+  display: inline-block;
+  margin: 10px;
+  border: 1px solid black;
+  overflow: hidden;         /*  clip the excess when child gets bigger than parent  */
+  width: 400px;
+  height: 400px;
+}
+#galimage img {
+  display: block;
+  width: 400px;
+  height: 400px;
+}
+
+#tuto {
+    width:25%;
+    margin-left : auto;
+    margin-right: auto;
+    padding:0;
+    color : #ccc;
+    text-align : justify;
+    padding : 0px;
+    font-size : 100%;
+    opacity:0.80;
+/*     border:1px solid #b5d9e7; */
+    margin-bottom:1px;
+    margin-top:-50px;
+}
+
+
+
+.imageBox_tuto{
+    float:left;
+    margin-left:1%;
+    margin-right:1%;
+    border:1px solid #b5d9e7;
+    padding:0px;
+    background-size : 100%;
+    background-repeat: no-repeat;
+}
+
+
+.logo {
+   position: absolute;
+   top: 60px;
+   right: 20px;
+   width:194px;
+   height:29px;
+   background-repeat: no-repeat;
+   opacity: 0.2;
+}
+
+
+body
+{
+	height: 100%;
+	font-family: "Segoe UI", arial, helvetica, freesans, sans-serif;
+	margin: 10px;
+	color: #333;
+	background-color: #fff;
+	overflow-x: auto;
+	overflow-y: scroll;
+}
+
+p
+{
+	margin: 0 0 1em 0;
+}
+
+#image
+{
+	display: block;
+	width: 100%;
+	cursor: n-resize;
+	cursor: -webkit-zoom-in;
+	cursor: -moz-zoom-in;
+}
+
+
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color:  #ffffcc;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/*-------------------------
+
+/**
+ * Tooltip Styles
+ */
+
+/* Base styles for the element that has a tooltip */
+[data-tooltip],
+.tooltip {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Base styles for the entire tooltip */
+[data-tooltip]:before,
+[data-tooltip]:after,
+.tooltip:before,
+.tooltip:after {
+  position: absolute;
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: 
+      opacity 0.2s ease-in-out,
+        visibility 0.2s ease-in-out,
+        -webkit-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    -moz-transition:    
+        opacity 0.2s ease-in-out,
+        visibility 0.2s ease-in-out,
+        -moz-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    transition:         
+        opacity 0.2s ease-in-out,
+        visibility 0.2s ease-in-out,
+        transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform:    translate3d(0, 0, 0);
+  transform:         translate3d(0, 0, 0);
+  pointer-events: none;
+}
+
+/* Show the entire tooltip on hover and focus */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after,
+[data-tooltip]:focus:before,
+[data-tooltip]:focus:after,
+.tooltip:hover:before,
+.tooltip:hover:after,
+.tooltip:focus:before,
+.tooltip:focus:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+/* Base styles for the tooltip's directional arrow */
+.tooltip:before,
+[data-tooltip]:before {
+  z-index: 1001;
+  border: 6px solid transparent;
+  background: transparent;
+  content: "";
+}
+
+/* Base styles for the tooltip's content area */
+.tooltip:after,
+[data-tooltip]:after {
+  z-index: 1000;
+  padding: 8px;
+  width: 160px;
+/*   background-color: #000; */
+  background-color: hsla(240, 60%, 50%, 0.95);
+  color: #ffff66;
+  content: attr(data-tooltip);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Directions */
+
+/* Top (default) */
+[data-tooltip]:before,
+[data-tooltip]:after,
+.tooltip:before,
+.tooltip:after,
+.tooltip-top:before,
+.tooltip-top:after {
+  bottom: 100%;
+  left: 50%;
+}
+
+[data-tooltip]:before,
+.tooltip:before,
+.tooltip-top:before {
+  margin-left: -6px;
+  margin-bottom: -12px;
+  border-top-color: #000;
+  border-top-color: hsla(240, 60%, 50%, 0.95);
+}
+
+/* Horizontally align top/bottom tooltips */
+[data-tooltip]:after,
+.tooltip:after,
+.tooltip-top:after {
+  margin-left: -80px;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after,
+[data-tooltip]:focus:before,
+[data-tooltip]:focus:after,
+.tooltip:hover:before,
+.tooltip:hover:after,
+.tooltip:focus:before,
+.tooltip:focus:after,
+.tooltip-top:hover:before,
+.tooltip-top:hover:after,
+.tooltip-top:focus:before,
+.tooltip-top:focus:after {
+  -webkit-transform: translateY(-12px);
+  -moz-transform:    translateY(-12px);
+  transform:         translateY(-12px); 
+}
+
+/* Left */
+.tooltip-left:before,
+.tooltip-left:after {
+  right: 100%;
+  bottom: 50%;
+  left: auto;
+}
+
+.tooltip-left:before {
+  margin-left: 0;
+  margin-right: -12px;
+  margin-bottom: 0;
+  border-top-color: transparent;
+  border-left-color: #000;
+  border-left-color: hsla(240, 60%, 50%, 0.95);
+}
+
+.tooltip-left:hover:before,
+.tooltip-left:hover:after,
+.tooltip-left:focus:before,
+.tooltip-left:focus:after {
+  -webkit-transform: translateX(-12px);
+  -moz-transform:    translateX(-12px);
+  transform:         translateX(-12px); 
+}
+
+/* Bottom */
+.tooltip-bottom:before,
+.tooltip-bottom:after {
+  top: 100%;
+  bottom: auto;
+  left: 50%;
+}
+
+.tooltip-bottom:before {
+  margin-top: -12px;
+  margin-bottom: 0;
+  border-top-color: transparent;
+  border-bottom-color: #000;
+  border-bottom-color: hsla(240, 60%, 50%, 0.95);
+}
+
+.tooltip-bottom:hover:before,
+.tooltip-bottom:hover:after,
+.tooltip-bottom:focus:before,
+.tooltip-bottom:focus:after {
+  -webkit-transform: translateY(12px);
+  -moz-transform:    translateY(12px);
+  transform:         translateY(12px); 
+}
+
+/* Right */
+.tooltip-right:before,
+.tooltip-right:after {
+  bottom: 50%;
+  left: 100%;
+}
+
+.tooltip-right:before {
+  margin-bottom: 0;
+  margin-left: -12px;
+  border-top-color: transparent;
+  border-right-color: #000;
+  border-right-color: hsla(240, 60%, 50%, 0.95);
+}
+
+.tooltip-right:hover:before,
+.tooltip-right:hover:after,
+.tooltip-right:focus:before,
+.tooltip-right:focus:after {
+  -webkit-transform: translateX(12px);
+  -moz-transform:    translateX(12px);
+  transform:         translateX(12px); 
+}
+
+/* Move directional arrows down a bit for left/right tooltips */
+.tooltip-left:before,
+.tooltip-right:before {
+  top: 3px;
+}
+
+/* Vertically center tooltip content for left/right tooltips */
+.tooltip-left:after,
+.tooltip-right:after {
+  margin-left: 0;
+  margin-bottom: -16px;
+}
+
+</style>   
+
+
+<!-- Javascript begins here--> 
+<script>
+
+// Global Variables
+var angle = 0;
+var scale = 1;
+var pix = 0.25;
+var npix = 64;
+var alfa=0;
+var delta=0;
+var upfile=false;
+// Initialization
+window.onload = function() {    
+
+      
+         // Markdown section
+          var mkdown =  document.getElementsByTagName('mkdown');
+          var converter = new showdown.Converter();
+          for(var i=0;i<mkdown.length;i++){
+             mkdown[i].innerHTML=converter.makeHtml(mkdown[i].innerHTML);
+             }
+      
+	
+	var sq = {};
+	sq.e = document.getElementById("galimage");
+	
+	
+	if (sq.e.addEventListener) {
+		sq.e.addEventListener("mousewheel", MouseWheelHandler, false);
+		sq.e.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+	}
+	else sq.e.attachEvent("onmousewheel", MouseWheelHandler);
+	
+	
+        // the jQuery code for preventing the main page to be scrolled while user is working on a galay image panels 
+        $('.noScroll, #galimage').on('mousewheel DOMMouseScroll', function (e) { 
+          var e0 = e.originalEvent;
+          var delta = e0.wheelDelta || -e0.detail;
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 1;
+          e.preventDefault();  
+        });
+        
+        
+        // disabling arrow keys from scrolling the page
+        $(document).keydown(function(e) {
+           if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
+              var e0 = e.originalEvent;
+              var delta = e0.wheelDelta || -e0.detail;
+              this.scrollTop += ( delta < 0 ? 1 : -1 ) * 1;
+              e.preventDefault();            
+              }
+        });
+	
+	function MouseWheelHandler(e) {
+
+		// cross-browser wheel delta
+		var e = window.event || e;
+		var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+		
+		if (delta==1) zoomIN();
+		else zoomOUT();
+
+		return false;
+	}
+	
+      
+        //init_index();   // initializing the small tutorial icons
+        
+        document.getElementById("galname").value = "NGC4826";
+        document.getElementById("pgc").value = "44182";
+        document.getElementById("ra").value = "194.1825";
+        document.getElementById("dec").value = "21.6820";
+        document.getElementById("fov").value = "15.71"; 
+        scale = 1.37;
+        angle = 0;
+        Display();
+
+
+
+$('#upload_form').on('change', function(){
+fileSubmit();
+});
+
+  
+}  // end initialize
+
+///////////////////////////////////////////////////////////////////////
+
+
+// initializing the small tutorial icons (not used)
+function init_index(){
+    // Sizing div className="imageBox_tuto"
+    var size_wo_border = document.getElementById("tuto").offsetWidth*(1-0.1) -20;
+    // Resizing imageboxes of tutorial
+    var tuto = ["tuto_1","tuto_2","tuto_3","tuto_4","tuto_5"];
+    for(t in tuto){
+        set_size(tuto[t],size_wo_border);
+        rescale_id(tuto[t]);
+    }
+    document.getElementById("tuto").style.height = document.getElementById("tuto_1").offsetHeight +"px";
+    
+}
+
+
+function rescale_id(id){
+    document.getElementById(id).style.height = document.getElementById(id).offsetWidth-2 + "px";
+}
+
+function set_size(id,size_wo_border){
+    document.getElementById(id).style.width = size_wo_border/5-1 + "px";
+}
+///////////////////////////////////////////////////////////////////////
+// Refreshing the Big image of galaxy
+function refresh(){
+
+    document.getElementById("image").style.transform = 'scale('+scale+') rotate('+angle+'deg)';
+    
+    document.getElementById("scale").innerHTML=scale.toFixed(2);
+    document.getElementById("angle").innerHTML=angle;
+
+}
+///////////////////////////////////////////////////////////////////////
+// Resizing and Rotating
+function zoomIN(){
+    scale *= 10./9;
+    refresh();
+}
+   
+function zoomOUT(){
+    scale *= 0.9;
+    refresh();
+}      
+
+function rotate1(){
+    angle += 1;
+    refresh();
+}
+
+
+function rotate2() {
+    angle -= 1;
+    refresh();
+}  
+
+
+// Keyboard actions (resize and rotate)
+function keyDown(e) {
+    
+
+    key = e.keyCode;
+
+    if(key == '38')  zoomIN();
+    if(key == '40')  zoomOUT();
+    if(key == '39')  rotate1();
+    if(key == '37')  rotate2();
+    
+    if(key == '38'|| key == '40') {
+    refresh();
+    }
+    
+    if(key == '37'|| key == '39') {
+    refresh();
+    }
+    
+}
+        
+///////////////////////////////////////////////////////////////////////
+// The action of "Clear" buttons
+function ClearFields() {
+
+    document.getElementById("ra").value = "";
+    document.getElementById("dec").value = "";
+    document.getElementById("fov").value = "";
+}
+
+function ClearFields1() {
+     document.getElementById("pgc").value = "";
+}
+
+
+function ClearFields2() {
+     document.getElementById("galname").value = "";
+}
+
+///////////////////////////////////////////////////////////////////////
+// The action of the "Load Image" button
+function loadIMG() {
+
+    document.getElementById("pgc").value = "";
+    document.getElementById("galname").value = "";
+    angle = 0;
+    scale = 1;
+    Display();
+
+    return false;
+}
+
+///////////////////////////////////////////////////////////////////////
+// Displaying the image of the queried galaxy
+// by downloading it from the SDSS image server
+function Display()  {
+
+
+    upfile = false;
+
+    document.body.classList.add('busy-cursor');
+
+    alfa =  parseFloat(document.getElementById("ra").value);
+    delta =  parseFloat(document.getElementById("dec").value);
+    var fov = parseFloat(document.getElementById("fov").value);
+    
+    document.getElementById("ra").value = alfa;
+    document.getElementById("dec").value = delta;
+    document.getElementById("fov").value = fov;
+    
+    var e = document.getElementById("fovUnit");
+    var unit = e.options[e.selectedIndex].value;
+
+    if (fov==0) {
+        fov = 1;
+        document.getElementById("fovUnit").selectedIndex=0;
+        document.getElementById("fov").value=1;
+        unit = 'arcmin';
+    }
+
+
+    var d = 1.;
+    if (unit=='arcmin') d=60.
+    if (unit=='degree') d=3600.
+
+    pix = 0.25;
+    // fov*d in arcsec
+    npix = parseInt(fov*d / pix)
+
+    while (npix>2048) {
+      pix = pix*2;
+      npix = parseInt(fov*d / pix);
+    }
+
+    if (npix<64) { npix=64;}
+
+    var Img = document.getElementById("galimage");
+    Img.children[0].src="http://skyserver.sdss.org/dr12/SkyserverWS/ImgCutout/getjpeg?TaskName=Skyserver.Explore.Image&ra="+alfa+"&dec="+delta+"&scale="+pix+"&width="+npix+"&height="+npix;
+
+
+    refresh();
+    document.body.classList.remove('busy-cursor');
+
+    return false;
+}
+
+///////////////////////////////////////////////////////////////////////
+// Taking in the results of the query on the LEDA catalog on the EDD
+function updateOBJ(results) {
+
+    var res = results.split(" ");
+    document.getElementById("ra").value = res[2];
+    document.getElementById("dec").value = res[3];
+    var fov = res[4]*1.5;
+    document.getElementById("fov").value = fov.toFixed(2);
+    document.getElementById("fovUnit").selectedIndex = 0;
+    document.getElementById("galname").value = res[1];
+    document.getElementById("pgc").value = res[0];
+
+
+    angle = parseInt(res[5])+90; //.toFixed(1);
+    // document.getElementById("angle").innerHTML = angle;
+    if (isNaN(angle)) {
+        angle = 0;
+    }
+
+    scale = 1;
+    Display();
+
+    if (res[0]=="") {
+        alert("Could not find it in the LEDA database !")
+    }
+
+}
+///////////////////////////////////////////////////////////////////////
+// Query based on the PGC number
+function getPGC() {
+   
+    var pgc = document.getElementById("pgc").value;
+   
+    //Creating a new XMLHttpRequest object
+    var xmlhttp;
+    if (window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest(); //for IE7+, Firefox, Chrome, Opera, Safari
+    } else {
+       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //for IE6, IE5
+    }
+               
+    var url = 'getPGC.php'
+    var params = 'pgc='+pgc;
+    
+    document.body.classList.add('busy-cursor');
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+   
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status == 200)
+                {   
+                    
+                    updateOBJ(xmlhttp.responseText) ;
+
+                    document.body.classList.remove('busy-cursor');
+
+                    } else {   
+                         document.body.classList.remove('busy-cursor');
+                         alert('Something is wrong !!!');
+                    }
+                }
+    };  // end function definition   
+    
+    xmlhttp.send(params);
+
+    return false;
+}
+
+///////////////////////////////////////////////////////////////////////
+// Query based on the Galaxy Name
+function getGAL() {
+
+    var galname = document.getElementById("galname").value;
+   
+    //Creating a new XMLHttpRequest object
+    var xmlhttp;
+    if (window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest(); //for IE7+, Firefox, Chrome, Opera, Safari
+    } else {
+       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //for IE6, IE5
+    }
+               
+    var url = 'getGAL.php'
+    var params = 'galname='+galname;
+    
+    document.body.classList.add('busy-cursor');
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+   
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status == 200)
+                {   
+                    updateOBJ(xmlhttp.responseText) ;
+                    
+                    document.body.classList.remove('busy-cursor');
+
+                    } else {   
+                         document.body.classList.remove('busy-cursor');
+                         alert('Something is wrong !!!');
+                    }
+                }
+    };  // end function definition   
+    
+    xmlhttp.send(params);
+
+    return false;
+}
+
+
+///////////////////////////////////////////////////////////////////////
+// The action of the "Evaluate" button
+// Running the underlying model and fetch the results
+///////////////////////////////////////////////////////////////////////          
+function incEvaluate() {
+// 
+   var resultsDIV = document.getElementById("results");
+   var blankDIV = document.getElementById("blank");
+   
+   resultsDIV.style.display='none';
+   blankDIV.style.display='block';
+   document.body.classList.add('busy-cursor');
+
+   if (upfile) {
+       var param = 'local=local'+'&scale='+scale+'&angle='+angle;
+   } else {
+//       var param = 'alfa='+alfa+'&delta='+delta+'&npix='+npix+'&scale='+scale+'&angle='+angle+'&pix='+pix;
+
+var param = {};
+param['alfa'] = alfa;
+param['delta'] = delta;
+param['npix'] = npix ;
+param['scale'] = scale;
+param['angle'] = angle;
+param['pix'] = pix;
+
+   }
+          
+    $.ajax({
+        type: "POST",
+        url: "inc/evaluate",
+	data: JSON.stringify(param),
+	contentType: "application/json",
+	dataType: 'json' 
+        });
+
+fd}
+///////////////////////////////////////////////////////////////////////  
+function manualEval() {
+
+   document.body.classList.add('busy-cursor');
+   
+   if (upfile) {
+       var param = 'local=local'+'&scale='+scale+'&angle='+angle;
+   } else {
+       var param = 'alfa='+alfa+'&delta='+delta+'&npix='+npix+'&scale='+scale+'&angle='+angle+'&pix='+pix;
+   }
+   
+   document.getElementById("manualGIZ").innerHTML = '<font size="2" color="red">Preparing image for the manual evaluations ...</font>';
+       
+    $.ajax({
+            type: "POST",
+            url: "converterx512.php",
+            data: param,
+            success: function (output) {
+
+                        if (output=='error\n') {
+                        
+                        alert("Wrong image format, try another image.");
+                        
+                        }
+                        
+                        else if (output=='size\n') {
+                        
+                        alert("Wrong image size. Use square images.");
+                        
+                        }
+                        
+                        else if (output=='success\n')  {
+
+                        myModal();
+
+                        
+                        }
+                       
+
+                        document.body.classList.remove('busy-cursor');
+                        document.getElementById("manualGIZ").innerHTML = '<font size="2">For Manual Evaluation on Galaxy Inclination Zoo <a href="javascript:manualEval()">Click Here</a></font>';
+                        
+
+            },
+            error: function (err) {
+                document.body.classList.remove('busy-cursor');
+                alert('Something is wrong !!!\n'+err);
+                document.getElementById("manualGIZ").innerHTML = '<font size="2">For Manual Evaluation on Galaxy Inclination Zoo <a href="javascript:manualEval()">Click Here</a></font>';
+            }
+        });
+
+}
+
+
+function myModal() {
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    modal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+
+}
+
+function closeModal() {
+
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+
+
+
+}
+
+
+///////////////////////////////////////////////////////////////////////
+function fileSubmit() {
+
+        var form = document.getElementById('upload_form');
+    var formData = new FormData(form);
+
+document.getElementById('upl').style.display='block';
+
+
+        $.ajax({
+           url: 'IM_upload.php',
+           type: 'POST',
+           data: formData,
+           async: false,
+           cache: false,
+           contentType: false,
+           enctype: 'multipart/form-data',
+           processData: false,
+           success: function (response) {
+           
+               if (response=="error\n") {
+                   alert("[Error] Please upload jpg, png, jpeg, and gif giles no larger than larger than 500KB !");
+               
+               } else { 
+               
+                   upfile = true;
+                   
+                   document.getElementById("ra").value="";
+                   document.getElementById("dec").value="";
+                   document.getElementById("fov").value="";
+                   document.getElementById("galname").value="Uploaded Image";
+                   document.getElementById("pgc").value="";
+                   document.getElementById("fovUnit").selectedIndex=0;
+                   scale = 1;
+                   angle=0;
+                   var Img = document.getElementById("galimage");
+                   Img.children[0].src="https://edd.ifa.hawaii.edu/incNET/tmp.jpg?" + new Date().getTime();
+                   refresh();
+                   
+               }
+                
+           },
+           error: function (err) {
+                alert('Something is wrong !!!\n'+err);
+            }
+        });
+        
+        document.getElementById('upl').style.display='none';
+        
+        
+}
+
+
+///////////////////////////////////////////////////////////////////////  
+</script>  <!-- End of Javascript-->
+
+
+
+</head>
+<body  onKeyDown="keyDown(event)" > 
+<!--     <h1>Press [+] to zoom in<br>Press [-] to zoom out.</h1> -->
+    
+    
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="">Smart Inclination Evaluation with Neural Network ...</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" style="">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor02" style="float:right">
+      <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item">
+             <a class="nav-link" href="https://edd.ifa.hawaii.edu/inclination" target='GIZ'>Galaxy Inclination Zoo</a>
+          </li>
+          <li class="nav-item">
+             <a class="nav-link" href="https://edd.ifa.hawaii.edu" target='EDD'>EDD</a>
+          </li>
+          <li class="nav-item">
+             <a class="nav-link" href="#help">HELP</a>
+          </li>
+      </ul>
+  </div>
+</nav>
+
+<!-------------------------------------------------------------->
+
+<!-- <div class="logo" id="giz_logo" style="background-image:url(https://edd.ifa.hawaii.edu/inclination/webpics/giz_logo_orig.png)"></div>-->
+
+<!--<div id="tuto">
+ 
+       <div class="imageBox_tuto" id="tuto_1" style="background-image:url(https://edd.ifa.hawaii.edu/inclination/img_tuto/1_400.png)"></div>
+
+       <div class="imageBox_tuto" id="tuto_2" style="background-image:url(https://edd.ifa.hawaii.edu/inclination/img_tuto/2_400.png)"></div>
+
+       <div class="imageBox_tuto" id="tuto_3" style="background-image:url(https://edd.ifa.hawaii.edu/inclination/img_tuto/3_400.png)"></div>
+
+       <div class="imageBox_tuto" id="tuto_4" style="background-image:url(https://edd.ifa.hawaii.edu/inclination/img_tuto/4_400.png)"></div>
+
+       <div class="imageBox_tuto" id="tuto_5" style="background-image:url(https://edd.ifa.hawaii.edu/inclination/img_tuto/5_400.png)"></div>
+</div>-->
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p><font color="green"> Image preparation was successful.</font> 
+    <p> <a href="https://edd.ifa.hawaii.edu/inclination/practice.php?pgc=0" target="GIZ" onclick='closeModal()'>Click Here </a> to continue your work in Galaxy Inclination Zoo !</p>
+    
+    
+    <div align="right"><a href="javascript:closeModal()">Cancel</a></div>
+
+  </div>
+
+</div>
+
+
+
+
+    
+<table><tr>
+<td valign="top">
+
+<table id="t00">
+
+<tr><td>&nbsp;</td></tr>
+
+
+    <tr id="t00"><td id="t00">
+    <table>
+    <tr id="t00"><td align="left" id="t00"><form onsubmit="return getPGC()">PGC Number</td><td style="padding:3px;"><input id="pgc" type="text" name="pgc" size="12"></td>
+        <td style="padding:3px;"><input type="submit" value="Load"/></td>
+        <td style="padding:3px;"><input type="button" value="Clear"  onclick="ClearFields1()"></form></td>
+    </tr>     
+    </table>
+    </td></tr>
+
+<tr><td><font color="black" size=2>Query <a href="http://leda.univ-lyon1.fr/" target="hyperleda">HyperLEDA</a></font>
+
+<sapn class="tooltip-bottom" data-tooltip="Enter the PGC number of a galaxy and find in the LEDA catalog, that is available on the Extragalactic Distance Database (EDD). The galaxy other name and other information are also taken from LEDA."><img onmouseover="this.src='https://edd.ifa.hawaii.edu/inclination/webpics/help_y.png';this.style='cursor: pointer';" onmouseout="this.src='https://edd.ifa.hawaii.edu/inclination/webpics/help.png';" src="https://edd.ifa.hawaii.edu/inclination/webpics/help.png"></span>
+
+	
+    </td></tr>
+    
+    
+    <tr><td>&nbsp;</td></tr>
+    <tr id="t00"><td id="t00">
+    <table>
+    <tr id="t00"><td align="left" id="t00"><form onsubmit="return getGAL()">Galaxy Name</td><td style="padding:3px;"><input id="galname" type="text" name="galname"  size="12"></td>
+        <td style="padding:3px;"><input type="submit" value="Load" /></td>
+        <td style="padding:3px;"><input type="button" value="Clear"  onclick="ClearFields2()"></form></td>
+    </tr>
+    </table>
+    </td></tr>
+    
+
+
+<tr><td><font color="black" size=2>Query <a href="http://ned.ipac.caltech.edu/" target="ned">NED</a> +<a href="http://leda.univ-lyon1.fr/" target="hyperleda">HyperLEDA</a></font>
+
+
+<sapn class="tooltip-bottom" data-tooltip="Find a galaxy using its common name. 
+A query is sent to the NASA/IPAC Extragalactic Database (NED) to extract the PGC number of the target galaxy, and then, the PGC number is used to find other galaxy infomration in the LEDA database."><img onmouseover="this.src='https://edd.ifa.hawaii.edu/inclination/webpics/help_y.png';this.style='cursor: pointer';" onmouseout="this.src='https://edd.ifa.hawaii.edu/inclination/webpics/help.png';" src="https://edd.ifa.hawaii.edu/inclination/webpics/help.png"></span>
+
+
+</td></tr>
+
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td style="border: 1px solid black;padding:10px;">
+
+
+<form onsubmit="return loadIMG()">
+
+<font color="black" size=4>Explore the Sky</font>
+<div>&nbsp;</div>
+
+     <div class="control-group">
+        <label class="control-label" for="ra">R.A.</label>
+          <div class="controls"><input id="ra"  type="text" name="ra" > [deg]      <div class="control-group">
+        <label class="control-label" for="dec">Dec.</label>
+          <div class="controls">           <input id="dec" type="text" name="dec" > [deg]       <div class="control-group">
+        <label class="control-label" for="zoom">Size</label>
+          <div class="controls">           
+            <input id="fov" type="text" name="fov" ><select id="fovUnit" name="fovUnit"><option value="arcmin">arcmin</option><option value="arcsec">arcsec</option><option value="degree">degree</option>
+                </select>
+          </div>
+      </div>   
+      
+      <div class="control-group">
+      <div class="controls">
+      <input type="button" value="Clear" onclick="ClearFields()">
+      <input type="submit" value="Load Image">
+      </div></div> 
+      
+</form>      
+
+<hr>
+    <form id="upload_form">
+        <div class="control-group">
+            <label class="control-label" for="ra"><b>Select image to upload<b>&nbsp;<sapn class="tooltip-bottom" data-tooltip="Non-square images are cropped to a square. The size of the image file should be smaller than 500KB."><img onmouseover="this.src='https://edd.ifa.hawaii.edu/inclination/webpics/help_y.png';this.style='cursor: pointer';" onmouseout="this.src='https://edd.ifa.hawaii.edu/inclination/webpics/help.png';" src="https://edd.ifa.hawaii.edu/inclination/webpics/help.png"></span></label>
+            <div class="controls"><input type="file" name="fileToUpload" id="fileToUpload"></div>
+            <div class="controls"><input style="display:none;" type="submit" value="Upload Image" name="submit"></div>
+            
+            <div id="upl" class="controls" style="display:none"><font color="green" size=2>Uploading ....</font></div>
+        </div>
+    </form>
+
+
+
+
+<hr>
+      <table><tr> 
+      <td valign="top">
+<table id='zoom' >  <!-- GRI keys -->
+  <tr><td><img class='zoom'  onClick="zoomOUT()" src="https://edd.ifa.hawaii.edu/inclination//webpics/zoom-out.png" title="zoom-out"></td><td  width='5px'></td>
+  <td><img class='zoom'  onClick="zoomIN()" src="https://edd.ifa.hawaii.edu/inclination//webpics/zoom-in.png" title="zoom-in"></td></tr>
+  
+  <tr><td><img class='zoom' onClick="rotate2()" src="https://edd.ifa.hawaii.edu/inclination//webpics/counterclock.png" title="rotate ccw"></td><td  width='5px'></td>
+  <td><img class='zoom' onClick="rotate1()" src="https://edd.ifa.hawaii.edu/inclination//webpics/clockwise.png" title="rotate cw"></td></tr>
+</table> <!-- END GRI keys -->
+   </td>
+   <td  width='30px'></td>
+   <td valign="middle">
+ 
+      <p><b>Scale: </b><spane id="scale">1</span></p>
+      <p><b>Angle: </b><spane id="angle">0</span> [deg]</p>  
+   
+   </td></tr></table>
+
+</td></tr>
+
+<tr><td>
+
+<!--<form action="upload.php" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>-->
+
+
+
+</td></tr>
+</table>
+
+</td>
+<td valign="top">
+    
+    <div id="galimage" >
+        <img id="image" id="1_0"  width="400" height="400">
+    </div>
+    
+    <table><tr><td style="padding:8px;">
+    <font color="blue" size=2><p>Use the mouse middle scroll to zom in/out.
+    </p><p>Use the keyboard arrow keys to rotate and resize.</p></font></td>
+    <td style="padding:8px;">
+    <button id="QLobject_button" type="button" onclick=incEvaluate() class="button orange medium" data-component="button">Evaluate</button></td>
+    </tr></table>
+    
+    <div align="center">
+    <p><fontsize=2>Align the galaxy semi-major axis horizontally,</font></p><p><fontsize=2>and then "Evaluate" its inclination !</font></p></div>
+    
+<div align="center">
+<p><spane id="manualGIZ"><font size="3">For Manual Evaluation on Galaxy Inclination Zoo <a href="javascript:manualEval()">Click Here</a></font><span></p></div>
+
+    
+</td>
+<td width='30px'>
+    
+</td>
+<td valign="top" halign='right' margin="15px">
+
+        <div style="display:none;" id="blank">
+        
+        <p>&nbsp;&nbsp;</p>
+        <p> <font color="red" size=3>Processing ... </font></p>
+        
+        </div>
+        
+        
+        
+        <div id="results"></div> <!--results-->
+        
+        
+        
+</td></tr>
+<tr><td></td>
+
+<td>
+
+
+</tr></table>
+
+</td>
+
+<td></td>
+
+</tr>
+</table>
+
+<!-------------------------------------------------------------->
+
+<div class="_help" id="help">
+
+<mkdown>
+<hr>
+
+
+### Help: Mouse and Keyboard Actions
+
+![Mouse Actions](https://edd.ifa.hawaii.edu/inclination/helpics/mouse_actions.png)
+
++ <span style="color:blue">**The middle scroll wheel**</span> on the mouse can be used to re-size the image.
+
+![arrow keys Up/Down](https://edd.ifa.hawaii.edu/inclination/helpics/arrow_keys_ud.png) ![Zoom in/out](https://edd.ifa.hawaii.edu/inclination/helpics/zoom_in_out.jpg)
+
++ You can zoom in/out by pressing <span style="color:blue">**up/down arrow keys**</span> on the keyboard.
+
+![arrow keys Left/Right](https://edd.ifa.hawaii.edu/inclination/helpics/arrow_keys_lr.png) <img src="https://edd.ifa.hawaii.edu/inclination/helpics/rotation.png" style="transform: scaleX(-1);" /> ![Rotation log](https://edd.ifa.hawaii.edu/inclination/helpics/rotation.png)
+
++ You can rotate the image by using <span style="color:blue">**left/right arrow keys**</span> on the keyboard. Use this option if the semi-major axis of the galaxy is not perfectly aligned horizontally.
+
+<hr>
+</mkdown>
+
+
+
+
+
+<div id="footer">
+<span> &#160;&#160;&#9400; Designed and Supported by <a class="footerlink" href="http://www.kourkchi.com/contact.html" target="contactESN">Ehsan Kourkchi</a>.</span>
+</div>   <!-- footer -->
+
+
+
+
+
+
+
+</body>
+</html>`    
+
+</div>
+           

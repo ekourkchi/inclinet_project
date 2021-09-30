@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5.1. server.py &mdash; IncliNET 21.09 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.2. incNET.py" href="incNET.html" />
+    <link rel="prev" title="5. Python Modules" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> IncliNET
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">1. The <code class="docutils literal notranslate"><span class="pre">IncliNET</span></code> Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html#Web-Application">2. Web Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html#API">3. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html#Acknowledgments">4. Acknowledgments</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">5. Python Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.1. server.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incNET.html">5.2. incNET.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CNN_models.html">5.3. CNN_models.py</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">IncliNET</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html"><span class="section-number">5. </span>Python Modules</a> &raquo;</li>
+      <li><span class="section-number">5.1. </span>server.py</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/server.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-server">
+<span id="server-py"></span><h1><span class="section-number">5.1. </span>server.py<a class="headerlink" href="#module-server" title="Permalink to this headline"></a></h1>
+<p>The inclinet server side in Python</p>
+<p>This package uses <code class="docutils literal notranslate"><span class="pre">Flask</span></code> to implement the API functionalities in Python.</p>
+<p>Visit the online GUI at <a class="reference external" href="http://edd.ifa.hawaii.edu/inclinet/">http://edd.ifa.hawaii.edu/inclinet/</a></p>
+<dl class="simple">
+<dt>For documentations check:</dt><dd><p><a class="reference external" href="https://github.com/ekourkchi/inclinet_deployment_repo/">https://github.com/ekourkchi/inclinet_deployment_repo/</a></p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="server.IM_upload">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">IM_upload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.IM_upload" title="Permalink to this definition"></a></dt>
+<dd><p>An image uploader <code class="docutils literal notranslate"><span class="pre">API</span></code> for the use in the online GUI
+This API is called from the online application, through <code class="docutils literal notranslate"><span class="pre">AJAX</span></code> calls.
+The uploaded image is stored on the server for further analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the status of the process, and the public address of the images path for the online GUI</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="server.NpEncoder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">NpEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.NpEncoder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">json.encoder.JSONEncoder</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="server.NpEncoder.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.NpEncoder.default" title="Permalink to this definition"></a></dt>
+<dd><p>Implement this method in a subclass such that it returns
+a serializable object for <code class="docutils literal notranslate"><span class="pre">o</span></code>, or calls the base implementation
+(to raise a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>).</p>
+<p>For example, to support arbitrary iterators, you could
+implement default like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="c1"># Let the base class default method raise the TypeError</span>
+    <span class="k">return</span> <span class="n">JSONEncoder</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.addGalaxyInfo">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">addGalaxyInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Leda</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pgc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.addGalaxyInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Exctracting the information of a galaxy from the LEDA catalog
+given the corresponsing PGC ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Leda</strong> (<code class="docutils literal notranslate"><span class="pre">Pandas</span> <span class="pre">dataFrame</span></code>) – Leda catalog</p></li>
+<li><p><strong>pgc</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – pgc ID</p></li>
+<li><p><strong>response</strong> (python <code class="docutils literal notranslate"><span class="pre">dictionary</span></code>, optional) – response to be modified, defaults to None</p></li>
+<li><p><strong>objname</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) – galaxy name, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response dictionary that holds the requested galaxy information</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>python dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.addUnits">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">addUnits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.addUnits" title="Permalink to this definition"></a></dt>
+<dd><p>adding units to the parameters of the provided dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>) – a dictionary that holds galaxy information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>revised dictionary</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.allowedFile">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">allowedFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffixes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['PNG',</span> <span class="pre">'JPG',</span> <span class="pre">'JPEG',</span> <span class="pre">'GIF']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.allowedFile" title="Permalink to this definition"></a></dt>
+<dd><p>Determining is the provided input file is acceptable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fileName</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – name of the input file</p></li>
+<li><p><strong>suffixes</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>, optional) – valid file extensions, defaults to <code class="docutils literal notranslate"><span class="pre">['PNG',</span> <span class="pre">'JPG',</span> <span class="pre">'JPEG',</span> <span class="pre">'GIF']</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if acceptable, False if invalid</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.arg_parser">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">arg_parser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.arg_parser" title="Permalink to this definition"></a></dt>
+<dd><p>Parsing the command line arguments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>parsed arguments <code class="docutils literal notranslate"><span class="pre">(opts,</span> <span class="pre">args)</span></code></p>
+</dd>
+</dl>
+<p>opts: the</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.createDir">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">createDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folderPath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.createDir" title="Permalink to this definition"></a></dt>
+<dd><p>generating a directory/folder if it doesn’t exist</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>folderPath</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – path to the desired folder</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True is created, False if the folder already exists</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.evaluate">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>An <code class="docutils literal notranslate"><span class="pre">API</span></code> rule that accepts galaxy images
+and returns a summary of all results</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>evaluated inclination(s) and other evaluations/predictions</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.expand2square">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">expand2square</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pil_img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.expand2square" title="Permalink to this definition"></a></dt>
+<dd><p>transforms images to square shapes
+If a rectangular image is provided, the output image is square in size.
+<strong>Note:</strong> image is NOT stretched, just the smaller dimension is padded</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pil_img</strong> (<code class="docutils literal notranslate"><span class="pre">PIL</span></code> image object) – input image</p></li>
+<li><p><strong>background_color</strong> (tuple <code class="docutils literal notranslate"><span class="pre">(R,</span> <span class="pre">G,</span> <span class="pre">B)</span></code>) – background color of the augmented part</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an square image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">PIL</span></code> image object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.file_api">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">file_api</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.file_api" title="Permalink to this definition"></a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">API</span></code> function, evaluating the inclination by providing the galaxy image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>summary of the results, inclinations, statistics</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl -F &#39;file=@/path/to/image/NGC_4579.jpg&#39; &lt;inclinet_url&gt;/api/file
+{
+&quot;status&quot;: &quot;success&quot;,
+&quot;filename&quot;: &quot;NGC_4579.jpg&quot;,
+&quot;inclinations&quot;: {
+    &quot;Group_0&quot;: {
+    &quot;model4&quot;: 47.0,
+    &quot;model41&quot;: 51.0,
+    &quot;model42&quot;: 50.0,
+    &quot;model43&quot;: 47.0
+    },
+    &quot;Group_1&quot;: {
+    &quot;model5&quot;: 49.0,
+    &quot;model51&quot;: 49.0,
+    &quot;model52&quot;: 51.0,
+    &quot;model53&quot;: 52.0
+    },
+    &quot;Group_2&quot;: {
+    &quot;model6&quot;: 50.0,
+    &quot;model61&quot;: 49.0,
+    &quot;model62&quot;: 49.0,
+    &quot;model63&quot;: 48.0
+    },
+    &quot;summary&quot;: {
+    &quot;mean&quot;: 49.333333333333336,
+    &quot;median&quot;: 49.0,
+    &quot;stdev&quot;: 1.49071198499986
+    }
+},
+&quot;rejection_likelihood&quot;: {
+    &quot;model4-binary&quot;: 84.28281545639038,
+    &quot;model5-binary&quot;: 94.24970746040344,
+    &quot;model6-binary&quot;: 88.11054229736328,
+    &quot;summary&quot;: {
+    &quot;mean&quot;: 88.88102173805237,
+    &quot;median&quot;: 88.11054229736328,
+    &quot;stdev&quot;: 4.105278145778375
+    }
+}
+}
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.getObj">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">getObj</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.getObj" title="Permalink to this definition"></a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">API</span></code> getObj rule
+Object name is provided in <code class="docutils literal notranslate"><span class="pre">json</span></code> format and it returns the information about
+the galaxy in <code class="docutils literal notranslate"><span class="pre">jason</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>galaxy information</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ra,</span> <span class="pre">dec</span></code>: galaxy coordinates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fov</span></code>: field of view</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pa</span></code>: position angle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">objname</span></code>: galaxy name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: success/fail depending on the status of the query</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+</dl>
+<p><strong>Example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl -X POST &lt;inclinet_url&gt;/getObj -d &#39;{&quot;objname&quot;:&quot;M31&quot;}&#39; -H &#39;Content-Type: application/json&#39;
+{
+&quot;dec&quot;: &quot;41.2689&quot;,
+&quot;fov&quot;: &quot;266.74&quot;,
+&quot;objname&quot;: &quot;M31&quot;,
+&quot;pa&quot;: &quot;35.0&quot;,
+&quot;pgc&quot;: 2557,
+&quot;ra&quot;: &quot;10.6848&quot;,
+&quot;status&quot;: &quot;success&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.getPGC">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">getPGC</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.getPGC" title="Permalink to this definition"></a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">API</span></code> getPGC rule
+The PGC number of galaxy is provided in <code class="docutils literal notranslate"><span class="pre">json</span></code> format and it returns the information about
+the galaxy in <code class="docutils literal notranslate"><span class="pre">json</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>galaxy information</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ra,</span> <span class="pre">dec</span></code>: galaxy coordinates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fov</span></code>: field of view</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pa</span></code>: position angle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">objname</span></code>: galaxy name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: success/fail depending on the status of the query</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+</dl>
+<p><strong>Example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl -X POST &lt;inclinet_url&gt;/getPGC -d &#39;{&quot;pgc&quot;:&quot;2557&quot;}&#39; -H &#39;Content-Type: application/json&#39;
+{
+&quot;dec&quot;: &quot;41.2689&quot;,
+&quot;fov&quot;: &quot;266.74&quot;,
+&quot;objname&quot;: &quot;NGC0224&quot;,
+&quot;pa&quot;: &quot;35.0&quot;,
+&quot;pgc&quot;: &quot;2557&quot;,
+&quot;ra&quot;: &quot;10.6848&quot;,
+&quot;status&quot;: &quot;success&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.getPGCid">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">getPGCid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.getPGCid" title="Permalink to this definition"></a></dt>
+<dd><p>extracting the PGC ID of a galaxy given its name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>objname</strong> (<em>str</em>) – galaxy name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>PGC ID</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.get_docs">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">get_docs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.get_docs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.home">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.home" title="Permalink to this definition"></a></dt>
+<dd><p>mounting the server home</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the rendered template <code class="docutils literal notranslate"><span class="pre">index.html</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.imSquarify">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">imSquarify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outPath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.imSquarify" title="Permalink to this definition"></a></dt>
+<dd><p>padding an image to square shape</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imPath</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – image path</p></li>
+<li><p><strong>outPath</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) – output path, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>output path, if the``outPath`` is not given the output is stored in the same locations</p>
+</dd>
+</dl>
+<p>as that of the input image
+:rtype: <code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.loadLeda">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">loadLeda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.loadLeda" title="Permalink to this definition"></a></dt>
+<dd><p>Loading the HyperLeda catalog:
+- <a class="reference external" href="http://leda.univ-lyon1.fr/">http://leda.univ-lyon1.fr/</a>
+- This catalog tabulates the proper information on local galaxies</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the Leda catalog in the Pandas dataFrame format</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Pandas <code class="docutils literal notranslate"><span class="pre">dataFrame</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.loadModels">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">loadModels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.loadModels" title="Permalink to this definition"></a></dt>
+<dd><p>Loading all ML models (deployment versions)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a Python dictionary that holds all models in groups</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>python <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.modelParams">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">modelParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.modelParams" title="Permalink to this definition"></a></dt>
+<dd><p>an auxillary function for additional book keepings
+The conventional extracted galaxy information from the LEDA catalog need to be
+revised to be compatible with the API of the SDSS image server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>) – input parameters</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>augmented/adjusted information</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.mySoup">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">mySoup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.mySoup" title="Permalink to this definition"></a></dt>
+<dd><p>Loading an online webpage using the Beautiful soup
+client, in order to parse the html contents</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – url of the online page</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the parsed html text of the requested url</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>&lt;class ‘bs4.BeautifulSoup’&gt;</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mySoup</span><span class="p">(</span><span class="s2">&quot;https://edd.ifa.hawaii.edu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.obj_api">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">obj_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.obj_api" title="Permalink to this definition"></a></dt>
+<dd><p>the URL <code class="docutils literal notranslate"><span class="pre">API</span></code> that evaluates inclinations by providing the <code class="docutils literal notranslate"><span class="pre">PGC</span> <span class="pre">ID</span></code> in the URL</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>objname</strong> (<code class="docutils literal notranslate"><span class="pre">string</span></code>) – galaxy name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the summary of all evaluated inclinations</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+</dl>
+<p>The following example shows the output <code class="docutils literal notranslate"><span class="pre">JSON</span></code> that contains the detailed evaluation of the available models.
+The <code class="docutils literal notranslate"><span class="pre">summary</span></code> fields hold the statistical summary of the outputs of all models.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl  &lt;inclinet_url&gt;/api/objname/M33
+{
+&quot;status&quot;: &quot;success&quot;,
+&quot;galaxy&quot;: {
+    &quot;pgc&quot;: 5818,
+    &quot;ra&quot;: &quot;23.4621 deg&quot;,
+    &quot;dec&quot;: &quot;30.6599 deg&quot;,
+    &quot;fov&quot;: &quot;92.49 arcmin&quot;,
+    &quot;pa&quot;: &quot;22.5 deg&quot;,
+    &quot;objname&quot;: &quot;M33&quot;
+},
+&quot;inclinations&quot;: {
+    &quot;Group_0&quot;: {
+    &quot;model4&quot;: 54.0,
+    &quot;model41&quot;: 58.0,
+    &quot;model42&quot;: 54.0,
+    &quot;model43&quot;: 52.0
+    },
+    &quot;Group_1&quot;: {
+    &quot;model5&quot;: 54.0,
+    &quot;model51&quot;: 55.0,
+    &quot;model52&quot;: 52.0,
+    &quot;model53&quot;: 55.0
+    },
+    &quot;Group_2&quot;: {
+    &quot;model6&quot;: 56.0,
+    &quot;model61&quot;: 57.0,
+    &quot;model62&quot;: 55.0,
+    &quot;model63&quot;: 53.0
+    },
+    &quot;summary&quot;: {
+    &quot;mean&quot;: 54.583333333333336,
+    &quot;median&quot;: 54.5,
+    &quot;stdev&quot;: 1.753963764987432
+    }
+},
+&quot;rejection_likelihood&quot;: {
+    &quot;model4-binary&quot;: 41.287994384765625,
+    &quot;model5-binary&quot;: 4.068142548203468,
+    &quot;model6-binary&quot;: 55.70455193519592,
+    &quot;summary&quot;: {
+    &quot;mean&quot;: 33.686896289388336,
+    &quot;median&quot;: 41.287994384765625,
+    &quot;stdev&quot;: 21.754880108256657
+    }
+}
+}
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.pgc_api">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">pgc_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pgcID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.pgc_api" title="Permalink to this definition"></a></dt>
+<dd><p>the URL <code class="docutils literal notranslate"><span class="pre">API</span></code> that evaluates inclinations by providing the <code class="docutils literal notranslate"><span class="pre">PGC</span> <span class="pre">ID</span></code> in the URL</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pgcID</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – PGC ID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the summary of all evaluated inclinations</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+</dl>
+<p>The following example shows that the output <code class="docutils literal notranslate"><span class="pre">JSON</span></code> contains the detailed evaluation of the available models.
+The <code class="docutils literal notranslate"><span class="pre">summary</span></code> fields hold the statistical summary of the outputs of all models.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl &lt;inclinet_url&gt;/api/pgc/2557&#39;
+{
+&quot;status&quot;: &quot;success&quot;,
+&quot;galaxy&quot;: {
+    &quot;pgc&quot;: &quot;2557&quot;,
+    &quot;ra&quot;: &quot;10.6848 deg&quot;,
+    &quot;dec&quot;: &quot;41.2689 deg&quot;,
+    &quot;fov&quot;: &quot;266.74 arcmin&quot;,
+    &quot;pa&quot;: &quot;35.0 deg&quot;,
+    &quot;objname&quot;: &quot;NGC0224&quot;
+},
+&quot;inclinations&quot;: {
+    &quot;Group_0&quot;: {
+    &quot;model4&quot;: 69.0,
+    &quot;model41&quot;: 72.0,
+    &quot;model42&quot;: 76.0,
+    &quot;model43&quot;: 71.0
+    },
+    &quot;Group_1&quot;: {
+    &quot;model5&quot;: 73.0,
+    &quot;model51&quot;: 73.0,
+    &quot;model52&quot;: 74.0,
+    &quot;model53&quot;: 74.0
+    },
+    &quot;Group_2&quot;: {
+    &quot;model6&quot;: 73.0,
+    &quot;model61&quot;: 76.0,
+    &quot;model62&quot;: 76.0,
+    &quot;model63&quot;: 67.0
+    },
+    &quot;summary&quot;: {
+    &quot;mean&quot;: 72.83333333333333,
+    &quot;median&quot;: 73.0,
+    &quot;stdev&quot;: 2.6718699236468995
+    }
+},
+&quot;rejection_likelihood&quot;: {
+    &quot;model4-binary&quot;: 50.396937131881714,
+    &quot;model5-binary&quot;: 20.49814760684967,
+    &quot;model6-binary&quot;: 65.37048816680908,
+    &quot;summary&quot;: {
+    &quot;mean&quot;: 45.42185763518015,
+    &quot;median&quot;: 50.396937131881714,
+    &quot;stdev&quot;: 18.65378065042258
+    }
+}
+}
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.xcmd">
+<span class="sig-prename descclassname"><span class="pre">server.</span></span><span class="sig-name descname"><span class="pre">xcmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.xcmd" title="Permalink to this definition"></a></dt>
+<dd><p>Runs an OS command</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – terminal command</p></li>
+<li><p><strong>verbose</strong> (<code class="docutils literal notranslate"><span class="pre">boolean</span></code>) – printing the details, default True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>OS outputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="5. Python Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="incNET.html" class="btn btn-neutral float-right" title="5.2. incNET.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CF4 program.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

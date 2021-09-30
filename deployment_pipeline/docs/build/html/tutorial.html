@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. The IncliNET Tutorial &mdash; IncliNET 21.09 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Python Modules" href="modules.html" />
+    <link rel="prev" title="IncliNET" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> IncliNET
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. The <code class="docutils literal notranslate"><span class="pre">IncliNET</span></code> Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Introduction">1.1. Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Problem">1.1.1. Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Objectives">1.1.2. Objectives</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Web-Application">2. Web Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Galaxy-PGC-ID">2.1. Galaxy PGC ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Galaxy-Name">2.2. Galaxy Name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Galaxy-Coordinates">2.3. Galaxy Coordinates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Galaxy-Image">2.4. Galaxy Image</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#API">3. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Example-1:-/api/pgc/">3.1. Example 1: /api/pgc/</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sending-a-request-with-the-galaxy-ID">3.1.1. Sending a request with the galaxy ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Erroneous-PGC-ID">3.1.2. Erroneous PGC ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Example-2:-/api/objname">3.2. Example 2: /api/objname</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sending-a-request-with-the-galaxy-name">3.2.1. Sending a request with the galaxy name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Wrong-galaxy-name">3.2.2. Wrong galaxy name</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Example-3:-/api/file">3.3. Example 3: /api/file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sending-a-request-with-the-galaxy-image">3.3.1. Sending a request with the galaxy image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Wrong-file-name">3.3.2. Wrong file name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Wrong-file-format">3.3.3. Wrong file format</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Example-4:-/getPGC">3.4. Example 4: <em>/getPGC</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Get-information-about-the-galaxy-providing-the-PGC-ID">3.4.1. Get information about the galaxy providing the PGC ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Generating-a-wrong-API-call">3.4.2. Generating a wrong API call</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Example-5:-/getObj">3.5. Example 5: <em>/getObj</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Get-information-about-the-galaxy-providing-its-common-name">3.5.1. Get information about the galaxy providing its common name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">3.5.2. Generating a wrong API call</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Related-Topics">3.6. Related Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Acknowledgments">4. Acknowledgments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#About-the-data">4.1. About the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Citation">4.2. Citation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Author">4.3. Author</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Disclaimer">4.4. Disclaimer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">5. Python Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">IncliNET</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><span class="section-number">1. </span>The <code class="docutils literal notranslate"><span class="pre">IncliNET</span></code> Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="The-IncliNET-Tutorial">
+<h1><span class="section-number">1. </span>The <code class="docutils literal notranslate"><span class="pre">IncliNET</span></code> Tutorial<a class="headerlink" href="#The-IncliNET-Tutorial" title="Permalink to this headline"></a></h1>
+<div class="section" id="Introduction">
+<h2><span class="section-number">1.1. </span>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline"></a></h2>
+<p>An application with and online web GUI and an easy to access API for determining the inclinations of the spiral galaxies using their optical images.</p>
+<p>This program is powered by several deep convolutional neural networks (CNN) implemented in <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code>. All CNNs are constructed based on the well-known <code class="docutils literal notranslate"><span class="pre">VGG</span></code> structure, where the convolutional filters are of size <code class="docutils literal notranslate"><span class="pre">3x3</span></code>.</p>
+<p><img alt="Inclinet_Deployment_flowchart" src="https://user-images.githubusercontent.com/13570487/134273571-099b9f86-ffb3-450e-94a8-c3262970f51f.png" /></p>
+<div class="section" id="Problem">
+<h3><span class="section-number">1.1.1. </span>Problem<a class="headerlink" href="#Problem" title="Permalink to this headline"></a></h3>
+<p>The inclination of spiral galaxies plays an important role in measurements of their distances using the <code class="docutils literal notranslate"><span class="pre">Tully-Fisher</span></code> relationship. Each galaxy has its own unique morphology, luminosity, and surface brightness profiles. In addition, galaxy images are covered by foreground stars of the Milky Way galaxy. Therefore, it is challenging to design an algorithm that automatically determines the 3D inclination of spiral galaxies. The inclinations of spiral galaxies can be coarsely derived from the
+ellipticity of apertures used for photometry, assuming that the image of a spiral galaxy is the projection of a disk with the shape of an oblate spheroid. For ~1/3 of spirals, the approximation of axial ratios provides inclination estimates good to better than 5 degrees, with degradation to ~5 degrees for another 1/3. However in ~1/3 of cases, ellipticity-deriven inclinations are problematic for a variety of reasons. Prominent bulges can dominate the axial ratio measurement, with the Sombrero
+galaxy (scroll down to see an image of <a class="reference external" href="https://cdn.eso.org/images/screen/eso0007a.jpg">The Sombrero Galaxy</a>) providing an extreme example. Some galaxies may not be axially symmetric due to tidal effects. High surface brightness bars within much lower surface brightness disks can lead to large errors. Simply the orientation of strong spiral features with respect to the tilt axis can be confusing. The statistical derivation of inclinations for large samples has been unsatisfactory.</p>
+</div>
+<div class="section" id="Objectives">
+<h3><span class="section-number">1.1.2. </span>Objectives<a class="headerlink" href="#Objectives" title="Permalink to this headline"></a></h3>
+<p>The task of manual evaluation of spirals inclinations is tedious and time consuming. In the future, with the large astronomical survey telescopes coming online, this task could not be efficiently done manually for thousands of galaxies. The objective of this project is to automatically determine the inclination of spiral galaxies with the human level accuracy providing their images (ideally in both colorful and black-and-white formats).</p>
+</div>
+</div>
+</div>
+<div class="section" id="Web-Application">
+<h1><span class="section-number">2. </span>Web Application<a class="headerlink" href="#Web-Application" title="Permalink to this headline"></a></h1>
+<p><a class="reference external" href="https://edd.ifa.hawaii.edu/inclinet/">https://edd.ifa.hawaii.edu/inclinet/</a></p>
+<p><img alt="GUI_screenshot" src="_images/web_gui.png" /></p>
+<p>On the left side of this tool, users have different options to find and load a galaxy image. The PGC-based query relies on the information provided by the <a class="reference external" href="http://leda.univ-lyon1.fr/">HyperLEDA</a> catalog. Each image is rotated and resized based on the LEDA entries for <code class="docutils literal notranslate"><span class="pre">logd25</span></code> and position angle (<code class="docutils literal notranslate"><span class="pre">pa</span></code>), which are reasonable in most cases. Further manual alignment features are provided, however the evaluation process is independent of the orientation of the image. Clicking on the
+<code class="docutils literal notranslate"><span class="pre">Evaluate</span></code> button, the output inclinations generated by various ML models are generated and the average results are displayed on the right side. This step feeds the image to a pre-trained neural network(s) and outputs the averages of the determined inclination value. In addition, there is other networks that separately predict the rejection probability of the galaxy by human users. For practical reasons, all images are converted to square sizes and rescaled to 128x128 pixels prior to the
+evaluation process.</p>
+<p>This online GUI allows users to submit a galaxy image through four different methods, as described below.</p>
+<div class="section" id="Galaxy-PGC-ID">
+<h2><span class="section-number">2.1. </span>Galaxy PGC ID<a class="headerlink" href="#Galaxy-PGC-ID" title="Permalink to this headline"></a></h2>
+<p>Entering the name of a galaxy by querying its PGC number (the ID of galaxy in the Principal Galaxy Catalog) - The PGC catalog is deployed with our model, and contains a table of galaxy coordinates and their sizes. Images are then queried from the <a class="reference external" href="http://skyserver.sdss.org/dr16/en/tools/quicklook/summary.aspx?">SDSS quick-look</a> image server.</p>
+</div>
+<div class="section" id="Galaxy-Name">
+<h2><span class="section-number">2.2. </span>Galaxy Name<a class="headerlink" href="#Galaxy-Name" title="Permalink to this headline"></a></h2>
+<p>Searching a galaxy by its common name. - The entered name is queried through the <a class="reference external" href="http://ned.ipac.caltech.edu/">NASA/IPAC Extragalactic Database</a>. Then, a python routine based on the package <a class="reference external" href="https://beautiful-soup-4.readthedocs.io/en/latest/#">Beautiful Soup</a> extracts the corresponding PGC number. Once the PGC ID is available, the galaxy image is imported from the <em>SDSS quick-look</em> as explained above.</p>
+<p><img alt="Screenshot from 2021-09-08 03-09-36" src="https://user-images.githubusercontent.com/13570487/132490712-c39440bc-9b41-4a3e-bb54-1c4fb0de2c30.png" /></p>
+</div>
+<div class="section" id="Galaxy-Coordinates">
+<h2><span class="section-number">2.3. </span>Galaxy Coordinates<a class="headerlink" href="#Galaxy-Coordinates" title="Permalink to this headline"></a></h2>
+<p>Looking at a specific location in the sky by entering the sky coordinates and the field size. In the first release we only provide access to the <code class="docutils literal notranslate"><span class="pre">SDSS</span></code> images, if they are available. <a class="reference external" href="https://www.sdss.org/dr16/">The SDSS coverage</a> is mainly limited to the Northern sky.</p>
+</div>
+<div class="section" id="Galaxy-Image">
+<h2><span class="section-number">2.4. </span>Galaxy Image<a class="headerlink" href="#Galaxy-Image" title="Permalink to this headline"></a></h2>
+<p>Uploading a galaxy image from the local computer of the user. - User has the option of uploading a galaxy image for evaluation by our model(s)</p>
+</div>
+</div>
+<div class="section" id="API">
+<h1><span class="section-number">3. </span>API<a class="headerlink" href="#API" title="Permalink to this headline"></a></h1>
+<p>We provide a <code class="docutils literal notranslate"><span class="pre">REST</span> <span class="pre">API</span></code> that can be called from terminal or other applications that enable the <code class="docutils literal notranslate"><span class="pre">REST</span> <span class="pre">API</span></code> calls. The input and output data would be in JSON format.</p>
+<div class="section" id="Example-1:-/api/pgc/">
+<h2><span class="section-number">3.1. </span>Example 1: /api/pgc/<a class="headerlink" href="#Example-1:-/api/pgc/" title="Permalink to this headline"></a></h2>
+<div class="section" id="Sending-a-request-with-the-galaxy-ID">
+<h3><span class="section-number">3.1.1. </span>Sending a request with the galaxy ID<a class="headerlink" href="#Sending-a-request-with-the-galaxy-ID" title="Permalink to this headline"></a></h3>
+<p>Evaluating inclination based on the <code class="docutils literal notranslate"><span class="pre">PGC</span> <span class="pre">ID</span></code> of the target galaxy. Here we test the API for <em>pgc=69327</em>.</p>
+<ul class="simple">
+<li><p>On average, there is ~7% that a human user rejects this galaxy.</p></li>
+<li><p>The median of all evaluated inclinations is 75 degree (from face-on).</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;./PGC69327_NGC7331.png&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;NGC7331&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;NGC7331&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_7_1.png" src="_images/tutorial_7_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl http://edd.ifa.hawaii.edu/inclinet/api/pgc/69327
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+  &#34;status&#34;: &#34;success&#34;,
+  &#34;galaxy&#34;: {
+    &#34;pgc&#34;: &#34;69327&#34;,
+    &#34;ra&#34;: &#34;339.2673 deg&#34;,
+    &#34;dec&#34;: &#34;34.4156 deg&#34;,
+    &#34;fov&#34;: &#34;14.00 arcmin&#34;,
+    &#34;pa&#34;: &#34;169.0 deg&#34;,
+    &#34;objname&#34;: &#34;NGC7331&#34;
+  },
+  &#34;inclinations&#34;: {
+    &#34;Group_0&#34;: {
+      &#34;model4&#34;: 75.0,
+      &#34;model41&#34;: 76.0,
+      &#34;model42&#34;: 74.0,
+      &#34;model43&#34;: 74.0
+    },
+    &#34;Group_1&#34;: {
+      &#34;model5&#34;: 76.0,
+      &#34;model51&#34;: 76.0,
+      &#34;model52&#34;: 75.0,
+      &#34;model53&#34;: 73.0
+    },
+    &#34;Group_2&#34;: {
+      &#34;model6&#34;: 75.0,
+      &#34;model61&#34;: 77.0,
+      &#34;model62&#34;: 76.0,
+      &#34;model63&#34;: 75.0
+    },
+    &#34;summary&#34;: {
+      &#34;mean&#34;: 75.16666666666667,
+      &#34;median&#34;: 75.0,
+      &#34;stdev&#34;: 1.0671873729054746
+    }
+  },
+  &#34;rejection_likelihood&#34;: {
+    &#34;model4-binary&#34;: 13.275855779647827,
+    &#34;model5-binary&#34;: 0.4835432395339012,
+    &#34;model6-binary&#34;: 2.4772919714450836,
+    &#34;summary&#34;: {
+      &#34;mean&#34;: 5.412230330208938,
+      &#34;median&#34;: 2.4772919714450836,
+      &#34;stdev&#34;: 5.619680442177983
+    }
+  }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Erroneous-PGC-ID">
+<h3><span class="section-number">3.1.2. </span>Erroneous PGC ID<a class="headerlink" href="#Erroneous-PGC-ID" title="Permalink to this headline"></a></h3>
+<p>or an ID that doesn’t exist</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl http://edd.ifa.hawaii.edu/inclinet/api/pgc/xxxx
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;message&#34;:&#34;Could not find PGCxxxx in the database. &#34;,&#34;status&#34;:&#34;failed&#34;}
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Example-2:-/api/objname">
+<h2><span class="section-number">3.2. </span>Example 2: /api/objname<a class="headerlink" href="#Example-2:-/api/objname" title="Permalink to this headline"></a></h2>
+<div class="section" id="Sending-a-request-with-the-galaxy-name">
+<h3><span class="section-number">3.2.1. </span>Sending a request with the galaxy name<a class="headerlink" href="#Sending-a-request-with-the-galaxy-name" title="Permalink to this headline"></a></h3>
+<p>Evaluating inclination based on the <code class="docutils literal notranslate"><span class="pre">Galaxy</span> <span class="pre">Name</span></code>. Here we test the API for ‘Sombrero’.</p>
+<ul class="simple">
+<li><p>On average, there is ~44% that a human user rejects this galaxy. However the descrepancies between different models is quites large, as 1<span class="math notranslate nohighlight">\(\sigma\)</span> standard devaition of the rejection likelihoods is ~20%. It would be suggested that a human overlooks the automatically determined inclination for this galaxy.</p></li>
+<li><p><a class="reference external" href="http://edd.ifa.hawaii.edu/inclination/practice.php?pgc=42407">Click here</a> for the manual evaluations on <a class="reference external" href="http://edd.ifa.hawaii.edu/inclination">Galaxy Inclination Zoo</a>.</p></li>
+<li><p>The median of all evaluated inclinations is 89 degree (from face-on).</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;./sombrero.png&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;The Sombrero Galaxy (M104)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;The Sombrero Galaxy (M104)&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_12_1.png" src="_images/tutorial_12_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl http://edd.ifa.hawaii.edu/inclinet/api/objname/Sombrero
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+  &#34;status&#34;: &#34;success&#34;,
+  &#34;galaxy&#34;: {
+    &#34;pgc&#34;: 42407,
+    &#34;ra&#34;: &#34;189.9977 deg&#34;,
+    &#34;dec&#34;: &#34;-11.6230 deg&#34;,
+    &#34;fov&#34;: &#34;12.77 arcmin&#34;,
+    &#34;pa&#34;: &#34;89.5 deg&#34;,
+    &#34;objname&#34;: &#34;Sombrero&#34;
+  },
+  &#34;inclinations&#34;: {
+    &#34;Group_0&#34;: {
+      &#34;model4&#34;: 89.0,
+      &#34;model41&#34;: 89.0,
+      &#34;model42&#34;: 75.0,
+      &#34;model43&#34;: 85.0
+    },
+    &#34;Group_1&#34;: {
+      &#34;model5&#34;: 87.0,
+      &#34;model51&#34;: 90.0,
+      &#34;model52&#34;: 88.0,
+      &#34;model53&#34;: 88.0
+    },
+    &#34;Group_2&#34;: {
+      &#34;model6&#34;: 90.0,
+      &#34;model61&#34;: 90.0,
+      &#34;model62&#34;: 88.0,
+      &#34;model63&#34;: 90.0
+    },
+    &#34;summary&#34;: {
+      &#34;mean&#34;: 87.41666666666667,
+      &#34;median&#34;: 88.5,
+      &#34;stdev&#34;: 4.009537241239803
+    }
+  },
+  &#34;rejection_likelihood&#34;: {
+    &#34;model4-binary&#34;: 59.36983823776245,
+    &#34;model5-binary&#34;: 14.682640135288239,
+    &#34;model6-binary&#34;: 60.917991399765015,
+    &#34;summary&#34;: {
+      &#34;mean&#34;: 44.99015659093857,
+      &#34;median&#34;: 59.36983823776245,
+      &#34;stdev&#34;: 21.439968280999413
+    }
+  }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Wrong-galaxy-name">
+<h3><span class="section-number">3.2.2. </span>Wrong galaxy name<a class="headerlink" href="#Wrong-galaxy-name" title="Permalink to this headline"></a></h3>
+<p>or a name that can not be recognized/parsed from <a class="reference external" href="https://ned.ipac.caltech.edu/">NED</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl http://edd.ifa.hawaii.edu/inclinet/api/objname/myGalaxy
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;message&#34;:&#34;Could not find oject myGalaxy.&#34;,&#34;status&#34;:&#34;failed&#34;}
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Example-3:-/api/file">
+<h2><span class="section-number">3.3. </span>Example 3: /api/file<a class="headerlink" href="#Example-3:-/api/file" title="Permalink to this headline"></a></h2>
+<div class="section" id="Sending-a-request-with-the-galaxy-image">
+<h3><span class="section-number">3.3.1. </span>Sending a request with the galaxy image<a class="headerlink" href="#Sending-a-request-with-the-galaxy-image" title="Permalink to this headline"></a></h3>
+<p>Evaluating inclination using the <code class="docutils literal notranslate"><span class="pre">Galaxy</span> <span class="pre">Image</span></code>. Here, we test the API for ‘Andromeda’.</p>
+<ul class="simple">
+<li><p>On average, there is ~4% that a human user rejects this galaxy.</p></li>
+<li><p>The median of all evaluated inclinations is 76 degree (from face-on).</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;./andromeda.jpg&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Andromeda&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Andromeda&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_17_1.png" src="_images/tutorial_17_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl -F <span class="s1">&#39;file=@./andromeda.jpg&#39;</span> http://edd.ifa.hawaii.edu/inclinet/api/file
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+  &#34;status&#34;: &#34;success&#34;,
+  &#34;filename&#34;: &#34;andromeda.jpg&#34;,
+  &#34;inclinations&#34;: {
+    &#34;Group_0&#34;: {
+      &#34;model4&#34;: 77.0,
+      &#34;model41&#34;: 79.0,
+      &#34;model42&#34;: 76.0,
+      &#34;model43&#34;: 76.0
+    },
+    &#34;Group_1&#34;: {
+      &#34;model5&#34;: 73.0,
+      &#34;model51&#34;: 76.0,
+      &#34;model52&#34;: 75.0,
+      &#34;model53&#34;: 72.0
+    },
+    &#34;Group_2&#34;: {
+      &#34;model6&#34;: 78.0,
+      &#34;model61&#34;: 76.0,
+      &#34;model62&#34;: 77.0,
+      &#34;model63&#34;: 78.0
+    },
+    &#34;summary&#34;: {
+      &#34;mean&#34;: 76.08333333333333,
+      &#34;median&#34;: 76.0,
+      &#34;stdev&#34;: 1.9346977943739831
+    }
+  },
+  &#34;rejection_likelihood&#34;: {
+    &#34;model4-binary&#34;: 9.210722893476486,
+    &#34;model5-binary&#34;: 34.75632667541504,
+    &#34;model6-binary&#34;: 8.197003602981567,
+    &#34;summary&#34;: {
+      &#34;mean&#34;: 17.3880177239577,
+      &#34;median&#34;: 9.210722893476486,
+      &#34;stdev&#34;: 12.28821993007762
+    }
+  }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Wrong-file-name">
+<h3><span class="section-number">3.3.2. </span>Wrong file name<a class="headerlink" href="#Wrong-file-name" title="Permalink to this headline"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl -F <span class="s1">&#39;file=@./myGalaxy.jpg&#39;</span> http://edd.ifa.hawaii.edu/inclinet/api/file
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+curl: (26) Failed to open/read local data from file/application
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Wrong-file-format">
+<h3><span class="section-number">3.3.3. </span>Wrong file format<a class="headerlink" href="#Wrong-file-format" title="Permalink to this headline"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl -F <span class="s1">&#39;file=@./myGalaxy.txt&#39;</span> http://edd.ifa.hawaii.edu/inclinet/api/file
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;filename&#34;:&#34;myGalaxy.txt&#34;,&#34;message&#34;:&#34;[Note] Please upload jpg, png, jpeg, and gif giles no larger than 1 MB !&#34;,&#34;status&#34;:&#34;failed&#34;}
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Example-4:-/getPGC">
+<h2><span class="section-number">3.4. </span>Example 4: <em>/getPGC</em><a class="headerlink" href="#Example-4:-/getPGC" title="Permalink to this headline"></a></h2>
+<div class="section" id="Get-information-about-the-galaxy-providing-the-PGC-ID">
+<h3><span class="section-number">3.4.1. </span>Get information about the galaxy providing the PGC ID<a class="headerlink" href="#Get-information-about-the-galaxy-providing-the-PGC-ID" title="Permalink to this headline"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">PGC</span> <span class="pre">2557</span></code> is the code of the <code class="docutils literal notranslate"><span class="pre">Andromeda</span></code> galaxy.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl -X <span class="s1">&#39;POST&#39;</span> <span class="err">\</span>
+      <span class="s1">&#39;http://edd.ifa.hawaii.edu/inclinet/getPGC&#39;</span> \
+      <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;accept: application/json&#39;</span> \
+      <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;Content-Type: application/json&#39;</span> \
+      <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;{&quot;pgc&quot;: 2557}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;dec&#34;:&#34;41.2689&#34;,&#34;fov&#34;:&#34;266.74&#34;,&#34;objname&#34;:&#34;NGC0224&#34;,&#34;pa&#34;:&#34;35.0&#34;,&#34;pgc&#34;:2557,&#34;ra&#34;:&#34;10.6848&#34;,&#34;status&#34;:&#34;success&#34;}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Generating-a-wrong-API-call">
+<h3><span class="section-number">3.4.2. </span>Generating a wrong API call<a class="headerlink" href="#Generating-a-wrong-API-call" title="Permalink to this headline"></a></h3>
+<p>Cases when the requested PGC ID is not available, or an error occurs in the API call</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl -X <span class="s1">&#39;POST&#39;</span> <span class="err">\</span>
+      <span class="s1">&#39;http://edd.ifa.hawaii.edu/inclinet/getPGC&#39;</span> \
+      <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;accept: application/json&#39;</span> \
+      <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;Content-Type: application/json&#39;</span> \
+      <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;{&quot;pgc&quot;: 20505070}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;status&#34;:&#34;error&#34;}
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Example-5:-/getObj">
+<h2><span class="section-number">3.5. </span>Example 5: <em>/getObj</em><a class="headerlink" href="#Example-5:-/getObj" title="Permalink to this headline"></a></h2>
+<div class="section" id="Get-information-about-the-galaxy-providing-its-common-name">
+<h3><span class="section-number">3.5.1. </span>Get information about the galaxy providing its common name<a class="headerlink" href="#Get-information-about-the-galaxy-providing-its-common-name" title="Permalink to this headline"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">M31</span></code> is the alternative name of <code class="docutils literal notranslate"><span class="pre">Andromeda</span></code> in the Messier catalog.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl -X <span class="s1">&#39;POST&#39;</span> <span class="err">\</span>
+      <span class="s1">&#39;http://edd.ifa.hawaii.edu/inclinet/getObj&#39;</span> \
+      <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;accept: application/json&#39;</span> \
+      <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;Content-Type: application/json&#39;</span> \
+      <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;{&quot;objname&quot;: &quot;M31&quot;}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;dec&#34;:&#34;41.2689&#34;,&#34;fov&#34;:&#34;266.74&#34;,&#34;objname&#34;:&#34;M31&#34;,&#34;pa&#34;:&#34;35.0&#34;,&#34;pgc&#34;:2557,&#34;ra&#34;:&#34;10.6848&#34;,&#34;status&#34;:&#34;success&#34;}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3><span class="section-number">3.5.2. </span>Generating a wrong API call<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<p>Cases when the requested galaxy name is not available, or an error occurs in the API call</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span> curl -X <span class="s1">&#39;POST&#39;</span> <span class="err">\</span>
+      <span class="s1">&#39;http://edd.ifa.hawaii.edu/inclinet/getObj&#39;</span> \
+      <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;accept: application/json&#39;</span> \
+      <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;Content-Type: application/json&#39;</span> \
+      <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;{&quot;objname&quot;: &quot;myGalaxy&quot;}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;status&#34;:&#34;error&#34;}
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Related-Topics">
+<h2><span class="section-number">3.6. </span>Related Topics<a class="headerlink" href="#Related-Topics" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>For further details on various VGG models we considered in this project <a class="reference external" href="https://github.com/ekourkchi/incNET-data/tree/master/incNET_VGGcnn_withAugmentation">click here</a>.</p></li>
+<li><p><a class="reference external" href="https://github.com/ekourkchi/inclinet_production_repo/blob/main/Inclinet_Deployment_Architecture.pdf">Visit here</a> to get the full picture of the deployment plan.</p></li>
+<li><p><a class="reference external" href="https://github.com/ekourkchi/inclinet_production_repo">The Production Pipeline</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekourkchi/incNET-data">Project proposal and motivations</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekourkchi/incNET-data/blob/master/incNET_dataPrep/incNET_dataClean.ipynb">Data Preprocessing</a> in order to get reliable labels</p></li>
+<li><p>On how to download data from the SDSS image service and preprocess them <a class="reference external" href="https://github.com/ekourkchi/SDSS_get">click here</a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="Acknowledgments">
+<h1><span class="section-number">4. </span>Acknowledgments<a class="headerlink" href="#Acknowledgments" title="Permalink to this headline"></a></h1>
+<div class="section" id="About-the-data">
+<h2><span class="section-number">4.1. </span>About the data<a class="headerlink" href="#About-the-data" title="Permalink to this headline"></a></h2>
+<p>All data exposed by the <em>IncliNET</em> project belongs to</p>
+<ul class="simple">
+<li><p>Cosmicflows-4 program</p></li>
+<li><p>Copyright (C) Cosmicflows</p></li>
+<li><p>Team - The Extragalactic Distance Database (EDD)</p></li>
+</ul>
+</div>
+<div class="section" id="Citation">
+<h2><span class="section-number">4.2. </span>Citation<a class="headerlink" href="#Citation" title="Permalink to this headline"></a></h2>
+<p>Please cite the following paper and <a class="reference external" href="https://github.com/ekourkchi/inclinet_deployment_repo">the gitHub repository of this project</a>.</p>
+<p><a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2020ApJ...902..145K/abstract">Cosmicflows-4: The Catalog of ∼10,000 Tully-Fisher Distances</a> (2020, ApJ, 902, 145)</p>
+<div class="highlight-bib notranslate"><div class="highlight"><pre><span></span><span class="nc">@ARTICLE</span><span class="p">{</span><span class="nl">2020ApJ...902..145K</span><span class="p">,</span>
+       <span class="na">author</span> <span class="p">=</span> <span class="s">{{Kourkchi}, Ehsan and {Tully}, R. Brent and {Eftekharzadeh}, Sarah and {Llop}, Jordan and {Courtois}, H{\&#39;e}l{\`e}ne M. and {Guinet}, Daniel and {Dupuy}, Alexandra and {Neill}, James D. and {Seibert}, Mark and {Andrews}, Michael and {Chuang}, Juana and {Danesh}, Arash and {Gonzalez}, Randy and {Holthaus}, Alexandria and {Mokelke}, Amber and {Schoen}, Devin and {Urasaki}, Chase}</span><span class="p">,</span>
+        <span class="na">title</span> <span class="p">=</span> <span class="s">&quot;{Cosmicflows-4: The Catalog of {\ensuremath{\sim}}10,000 Tully-Fisher Distances}&quot;</span><span class="p">,</span>
+      <span class="na">journal</span> <span class="p">=</span> <span class="s">{\apj}</span><span class="p">,</span>
+     <span class="na">keywords</span> <span class="p">=</span> <span class="s">{Galaxy distances, Spiral galaxies, Galaxy photometry, Hubble constant, H I line emission, Large-scale structure of the universe, Inclination, Sky surveys, Catalogs, Distance measure, Random Forests, 590, 1560, 611, 758, 690, 902, 780, 1464, 205, 395, 1935, Astrophysics - Astrophysics of Galaxies}</span><span class="p">,</span>
+         <span class="na">year</span> <span class="p">=</span> <span class="m">2020</span><span class="p">,</span>
+        <span class="na">month</span> <span class="p">=</span> <span class="nv">oct</span><span class="p">,</span>
+       <span class="na">volume</span> <span class="p">=</span> <span class="s">{902}</span><span class="p">,</span>
+       <span class="na">number</span> <span class="p">=</span> <span class="s">{2}</span><span class="p">,</span>
+          <span class="na">eid</span> <span class="p">=</span> <span class="s">{145}</span><span class="p">,</span>
+        <span class="na">pages</span> <span class="p">=</span> <span class="s">{145}</span><span class="p">,</span>
+          <span class="na">doi</span> <span class="p">=</span> <span class="s">{10.3847/1538-4357/abb66b}</span><span class="p">,</span>
+<span class="na">archivePrefix</span> <span class="p">=</span> <span class="s">{arXiv}</span><span class="p">,</span>
+       <span class="na">eprint</span> <span class="p">=</span> <span class="s">{2009.00733}</span><span class="p">,</span>
+ <span class="na">primaryClass</span> <span class="p">=</span> <span class="s">{astro-ph.GA}</span><span class="p">,</span>
+       <span class="na">adsurl</span> <span class="p">=</span> <span class="s">{https://ui.adsabs.harvard.edu/abs/2020ApJ...902..145K}</span><span class="p">,</span>
+      <span class="na">adsnote</span> <span class="p">=</span> <span class="s">{Provided by the SAO/NASA Astrophysics Data System}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Author">
+<h2><span class="section-number">4.3. </span>Author<a class="headerlink" href="#Author" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Ehsan Kourkchi - <a class="reference external" href="mailto:ekourkchi&#37;&#52;&#48;gmail&#46;com">ekourkchi<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
+</ul>
+</div>
+<div class="section" id="Disclaimer">
+<h2><span class="section-number">4.4. </span>Disclaimer<a class="headerlink" href="#Disclaimer" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>All rights reserved. The material may not be used, reproduced or distributed, in whole or in part, without the prior agreement.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="IncliNET" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="5. Python Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CF4 program.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
