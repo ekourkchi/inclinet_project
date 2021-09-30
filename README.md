@@ -24,9 +24,11 @@ g, r, i images have equal chance of appearance in each batch
 
 
 ![fig1](https://user-images.githubusercontent.com/13570487/135529446-134617dc-9ba6-4834-a11d-487c7f5a7025.png)
+
 *Fig. 1: Left: Distribution of the inclinations of the original sample galaxies. Right: Distribution of the augmented sample inclinations*
 
 ![fig2](https://user-images.githubusercontent.com/13570487/135529776-cbe10cf2-22dc-4a87-b447-8d9b94842d20.png)
+
 *Fig. 2 : Examples of augmented images. In each panel, the galaxy ID is in cyan. Red is the inclination and magenta is the image pass-band, i.e. g, r, i and c, where c stands for RGB.*
 
 **Notebooks:**
@@ -39,10 +41,12 @@ https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/incNET_model_
 
 
 ![Fig3](https://user-images.githubusercontent.com/13570487/135529972-eb037bbd-7531-4da2-88d2-85a64ac7a77b.png)
+
 *Fig. 3: Left: Distribution of the labels of the original sample galaxies. Right: Distribution of the sample labels after augmentation. As expected, each batch covers both labels uniformly. This reduces any biases that originate from the data imbalance.*
 
 
 ![Fig4](https://user-images.githubusercontent.com/13570487/135530054-987a33b4-8207-4e4a-8f3b-8e98a7525f85.png)
+
 *Fig. 4: Examples of augmented images. IIn each panel, the PGC ID of the galaxy is in cyan. Red is the classification label and magenta is the image pass-band, i.e. g, r, i and c, where c stands for RGB.*
 
 ## Inclination Labels
@@ -51,6 +55,7 @@ We have investigated the capability of the human eye to evaluate galaxy inclinat
 
 
 ![Fig5](https://user-images.githubusercontent.com/13570487/135530392-123f7689-8e11-4af3-9e9e-c64810351af8.png)
+
 *Fig. 5: Users compare each target galaxy with a set of standard galaxies to evaluate their inclinations.*
 
 
@@ -65,6 +70,7 @@ The uncertainties on the measured inclinations are estimated based on the statis
 
 
 ![Fig6](https://user-images.githubusercontent.com/13570487/135530645-28f40a5f-79e0-4d01-8307-2ce91d2d1e0c.png)
+
 *Fig. 6: The distribution of the labels across the sample*
 
 
@@ -75,6 +81,7 @@ Fig. 7 compares the results of two different groups of users. Evidently, on aver
 As expected, we see smaller scatter at larger inclination values towards the edge-on galaxies. Practically, it is much easier for users to recognize and evaluate edge-on galaxies, which fortunately is in the favor of our astronomy research, because our sample mainly consists of edge-on galaxies. On the other hand, more scatter about less inclined galaxies (that indicate larger uncertainty on the measured values) and having much smaller number of evaluated galaxies in that region makes it hard for machine learning algorithms to learn from data and have accurate predictions when galaxies tend to be more face-on (smaller inclination values).
 
 ![Fig7](https://user-images.githubusercontent.com/13570487/135530717-544e2580-b940-494e-8063-638b09e70f4c.png)
+
 *Fig. 7: Median of the evaluated inclinations by two different groups of users for ∼2000 galaxies.*
 
 **Notebook**
@@ -159,6 +166,7 @@ As illustrated in Fig. 9, the training process can be stopped about the iteratio
 
 
 ![Fig9](https://user-images.githubusercontent.com/13570487/135531689-799b0abd-0ba5-4da6-8122-10cec42aab48.png)
+
 *Fig. 9: Regression evaluations metrics vs. training epochs*
 
 ## Classification, determining good/bad galaxy images
@@ -188,6 +196,7 @@ https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Train
 According to Fig. 10, after about 200 iterations, the loss function of the training sample decreases while the performance gets worse on the test sample. This means that over-training the network after this point doesn't improve the outcome.
 
 ![Fig10](https://user-images.githubusercontent.com/13570487/135531763-7dc87f62-243a-4c87-a3df-9992344e1518.png)
+
 *Fig. 10: classification evaluations metrics vs. training epochs*
 
 
@@ -339,5 +348,152 @@ Visit this folder on gitHub for the codes: https://github.com/ekourkchi/inclinet
 - To build more complicated models, we can present all images taken at different wavebands in separate channels, instead of parsing them as single entities. All passbands can be fed into the CNN at once.
 - Images can be used in raw format. The dynamical range of the astronomical images are way beyond the 0-255 range. Instead of downscaling the dynamical range to produce the visualizable images, we can use the full dynamical range of the observations
 
+## Deployment 
 
+Fig. 20 illustrates the deployment unit.
+
+![Inclinet_Deployment_flowchart](https://user-images.githubusercontent.com/13570487/134273571-099b9f86-ffb3-450e-94a8-c3262970f51f.png)
+
+*Fig. 20: The Deployment Unit. Galaxies are provided in forms of images or their ID in the PGC catalog*
+
+### Code Repository & Issues
+
+https://github.com/ekourkchi/inclinet_deployment_repo
+
+
+### Basic Install 
+#### On a local machine using Docker
+
+- First, you need to [install](https://docs.docker.com/compose/install/) Docker Compose. 
+
+```bash
+ pip install docker-compose
+```
+
+- Execute
+
+```console
+$ docker run -it --entrypoint /inclinet/serverup.sh -p 3030:3030  ekourkchi/inclinet
+```
+
+- Open the Application: Once the service is running in the terminal, open a browser like *Firefox* or *Google Chrome* and enter the following url: [http://0.0.0.0:3030/](http://0.0.0.0:3030/)
+
+#### On a server using Docker
+
+- First, you need to install Docker Compose. [How to install](https://docs.docker.com/compose/install/)
+
+- Execute
+
+```console
+$ docker run -it --entrypoint /inclinet/serverup.sh --env="WEBROOT=/inclinet/" -p pppp:3030 -v /pathTO/public_html/static/:/inclinet/static ekourkchi/inclinet
+```
+
+where `WEBROOT` is an environmental variable that points to the root of the application in the URL path. `pppp` is the port number that the service would be available to the world. `3030` is the port number of the docker container that our application uses by default. `/pathTO/public_html/static/` is the path to the `public_html` or any folder that the backend server uses to expose communicate with Internet. We basically need to mount `/pathTO/public_html/static/` to the folder `inclinet/static` within the container which is used internally by the application. 
+
+**URL**: Following the above example, if the server host is accessible through `www.example.com`, then our application would be launched on `www.example.com/inclinet:pppp`. Remember `http` or `https` by default use ports 80 and 443, respectively.
+
+
+#### directly from source codes
+
+Just put the repository on the server or on a local machine and make sure that folder `<repository>/static` is linked to a folder that is exposed by the server to the outside world. Set `WEBROOT` prior to launching the application to point the application to the correct URL path.
+
+Execution of `server.py` launches the application. 
+
+```console
+        $ python server.py -h
+
+
+        - starting up the service on the desired host:port
+        
+        - How to run: 
+        
+            $ python server.py -t <host IP> -p <port_number> -d <debugging_mode>
+
+        - To get help
+            $ python server.py -h
+        
+
+
+        Options:
+        -h, --help            show this help message and exit
+        -p PORT, --port=PORT  the port number to run the service on
+        -t HOST, --host=HOST  service host
+        -d, --debug           debugging mode
+
+```
+
+Please consult [the IncliNET code documentation](https://edd.ifa.hawaii.edu/static/html/server.html) for further details. 
+For more thorough details, refer to the [tutorial](https://edd.ifa.hawaii.edu/static/html/index.html).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Acknowledgments
+
+## About the data
+
+All data exposed by the *IncliNET* project belongs to 
+
+- Cosmicflows-4 program
+- Copyright (C) Cosmicflows
+- Team - The Extragalactic Distance Database (EDD)
+
+## Citation
+
+Please cite the following paper and [the gitHub repository of this project](https://github.com/ekourkchi/inclinet_deployment_repo).
+
+- [Cosmicflows-4: The Catalog of ∼10,000 Tully-Fisher Distances](https://ui.adsabs.harvard.edu/abs/2020ApJ...902..145K/abstract)
+
+
+```bib
+@ARTICLE{2020ApJ...902..145K,
+       author = {{Kourkchi}, Ehsan and {Tully}, R. Brent and {Eftekharzadeh}, Sarah and {Llop}, Jordan and {Courtois}, H{\'e}l{\`e}ne M. and {Guinet}, Daniel and {Dupuy}, Alexandra and {Neill}, James D. and {Seibert}, Mark and {Andrews}, Michael and {Chuang}, Juana and {Danesh}, Arash and {Gonzalez}, Randy and {Holthaus}, Alexandria and {Mokelke}, Amber and {Schoen}, Devin and {Urasaki}, Chase},
+        title = "{Cosmicflows-4: The Catalog of {\ensuremath{\sim}}10,000 Tully-Fisher Distances}",
+      journal = {\apj},
+     keywords = {Galaxy distances, Spiral galaxies, Galaxy photometry, Hubble constant, H I line emission, Large-scale structure of the universe, Inclination, Sky surveys, Catalogs, Distance measure, Random Forests, 590, 1560, 611, 758, 690, 902, 780, 1464, 205, 395, 1935, Astrophysics - Astrophysics of Galaxies},
+         year = 2020,
+        month = oct,
+       volume = {902},
+       number = {2},
+          eid = {145},
+        pages = {145},
+          doi = {10.3847/1538-4357/abb66b},
+archivePrefix = {arXiv},
+       eprint = {2009.00733},
+ primaryClass = {astro-ph.GA},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2020ApJ...902..145K},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+```
+
+
+## Author
+
+- Ehsan Kourkchi - [ekourkchi@gmail.com](ekourkchi@gmail.com)
+
+## Disclaimer
+
+ * All rights reserved. The material may not be used, reproduced or distributed, in whole or in part, without the prior agreement. 
+
+
+# References
+- Recovering the Structure and Dynamics of the Local Universe ([Ph.D. Thesis by E. Kourkchi - 2020](https://scholarspace.manoa.hawaii.edu/bitstream/10125/68946/Kourkchi_hawii_0085A_10582.pdf))
+- Cosmicflows-4: The Catalog of ~10000 Tully-Fisher Distances (Journal ref: Kourkchi et al., 2020, ApJ, 902, 145, [arXiv:2009.00733](https://arxiv.org/pdf/2009.00733)) refer to section 2.3
+- Global Attenuation in Spiral Galaxies in Optical and Infrared Bands (Journal ref: Kourkchi et al.,2019, ApJ, 884, 82, [arXiv:1909.01572](https://arxiv.org/pdf/1909.01572)) refer to section 2.5
+- Galaxy Inclination Zoo ([GIZ](http://edd.ifa.hawaii.edu/inclination/index.php))
+- [GIZ help page](https://edd.ifa.hawaii.edu/inclination/help.html)
+- [GIZ Blog](https://galinc.weebly.com/)
 
