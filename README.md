@@ -325,7 +325,7 @@ Visit this folder on gitHub for the codes: https://github.com/ekourkchi/inclinet
 - Input Data
    - Data is presented in the form of images. Non-square images are padded to have square dimensions, and they are resized to the appropriate shape (128x128)
    - Labels are the spatial inclinations of spiral galaxies from face-on 
-- pipeline.sh: This bash script runs the pipeline end-to-end from the data preparation to building the CNN models
+- `pipeline.sh`: This bash script runs the pipeline end-to-end from the data preparation to building the CNN models
    - `data_prep.py`: This code is mainly used to downsize (downsample) images that are stored in a specified folder.
    - `data_compress.py`: compressing images of a folder that are all in the same size
    - `data_split.py`: taking the npz file at each filter, and splitting them into training and testing batches. 10% of all galaxies with inclinations greater than 45 degrees are set aside for the testing purpose. To perform extra analysis (like bagging), sub-samples of the training set are generated, with the size of 67% of the entire training sample size. Sub-samples overlap as each contains 2/3 of the data drawn randomly from the main sample, whereas the test sample doesn't overlap with any of the training sub-samples.
@@ -394,7 +394,7 @@ where `WEBROOT` is an environmental variable that points to the root of the appl
 **URL**: Following the above example, if the server host is accessible through `www.example.com`, then our application would be launched on `www.example.com/inclinet:pppp`. Remember `http` or `https` by default use ports 80 and 443, respectively.
 
 
-#### directly from source codes
+#### Directly from source codes
 
 Just put the repository on the server or on a local machine and make sure that folder `<repository>/static` is linked to a folder that is exposed by the server to the outside world. Set `WEBROOT` prior to launching the application to point the application to the correct URL path.
 
@@ -427,7 +427,7 @@ Please consult [the IncliNET code documentation](https://edd.ifa.hawaii.edu/stat
 For more thorough details, refer to the [tutorial](https://edd.ifa.hawaii.edu/static/html/index.html).
 
 
-### Web Application
+# Web Application
 
 This application is available online: https://edd.ifa.hawaii.edu/inclinet/
 
@@ -456,7 +456,7 @@ Looking at a specific location in the sky by entering the sky coordinates and th
 Uploading a galaxy image from the local computer of the user. - User has the option of uploading a galaxy image for evaluation by our model(s)
 
 
-### API
+## API
 
 - See the `API documentation` [here](https://edd.ifa.hawaii.edu/inclinet/api/docs)
 
@@ -476,6 +476,13 @@ $ curl http://edd.ifa.hawaii.edu/inclinet/api/pgc/<PGC_id>
 
     ```bash
     $ curl http://edd.ifa.hawaii.edu/inclinet/api/pgc/2557
+    ```
+
+<details><summary>See Output ... </summary>
+<p>
+
+```python
+
     {
     "status": "success",
     "galaxy": {
@@ -523,6 +530,8 @@ $ curl http://edd.ifa.hawaii.edu/inclinet/api/pgc/<PGC_id>
     }
     }
     ```
+</p>
+</details>
 
 2. Given the `galaxy common name`, the following URL reports all evaluated inclinations and other results in `json` format. `<obj_name>` is the galaxy galaxy name. Galaxy name is looked up on [NASA/IPAC Extragalactic Database](https://ned.ipac.caltech.edu/) and the corresponding `PGC` number would be used for the purpose of our analysis.
 
