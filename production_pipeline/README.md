@@ -15,10 +15,10 @@
 ![pipeline](https://user-images.githubusercontent.com/13570487/133752460-b37f96b1-763b-4dd1-8521-803adbdd49d1.png)
 
 **Related information**
-- For furhter details on various VGG models we considered in this project [click here](https://github.com/ekourkchi/incNET-data/tree/master/incNET_VGGcnn_withAugmentation).
+- For further details on various VGG models we considered in this project [click here](https://github.com/ekourkchi/inclinet_project/tree/main/VGG_models).
 - [Visit here](https://github.com/ekourkchi/inclinet_production_repo/blob/main/Inclinet_Deployment_Architecture.pdf) to get the full picture of the deployment plan.
 - [Project proposal and motivations](https://github.com/ekourkchi/incNET-data)
-- [Data Preprocessing](https://github.com/ekourkchi/incNET-data/blob/master/incNET_dataPrep/incNET_dataClean.ipynb) to get reliable labels
+- [Data Preprocessing](https://github.com/ekourkchi/inclinet_project/tree/main/data_extraction/incNET_dataClean.ipynb) to get reliable labels
 - On how to download data from the SDSS image service and preprocess them [click here](https://github.com/ekourkchi/SDSS_get)
 
 ## Main Components:
@@ -138,7 +138,7 @@ The entire training set is also stored under the name of `<outFileRoot>train_000
         
             $ data_split.py -i <input_folder_path> -o <output_folder_path> -s <image_size> -n <m_iter> -v <verbose>
 
-            - m_iter is the number of subsamples, each with the size of 67% of the entire dataset
+            - m_iter is the number of sub-samples, each with the size of 67% of the entire dataset
         
         - Example:
             $ python data_split.py -i ./compressed/ -o samples/ -n 3 -v
