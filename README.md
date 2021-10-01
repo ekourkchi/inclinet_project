@@ -1,17 +1,20 @@
-<!-- vscode-markdown-toc -->
- 1. [Introduction](#Introduction)
- 2. [Data Preparation](#DataPreparation)
+# IncliNET
+
+![inclinet_logo](https://user-images.githubusercontent.com/13570487/134275660-2585ec68-0744-4ad0-b02c-05ddb51bd9e4.png)
+
+1. [Introduction](#Introduction)
+2. [Data Preparation](#DataPreparation)
 	* 2.1. [Inclination Labels](#InclinationLabels)
 		* 2.1.1. [Comparing users' adjusted measurements against each other](#Comparingusersadjustedmeasurementsagainsteachother)
 		* 2.1.2. [Notebooks](#Notebooks)
 	* 2.2. [Image Extraction](#ImageExtraction)
 	* 2.3. [Image Augmentation](#ImageAugmentation)
 		* 2.3.1. [Notebooks](#Notebooks-1)
-* 3. [Models](#Models)
+3. [Models](#Models)
 	* 3.1. [Model 4](#Model4)
 	* 3.2. [Model 5](#Model5)
 	* 3.3. [Model 6](#Model6)
-* 4. [Training](#Training)
+4. [Training](#Training)
 	* 4.1. [Regression, determining inclinations](#Regressiondetermininginclinations)
 		* 4.1.1. [Notebooks](#Notebooks-1)
 		* 4.1.2. [Challenges](#Challenges)
@@ -22,13 +25,14 @@
 	* 4.2. [Classification, determining good/bad galaxy images](#Classificationdetermininggoodbadgalaxyimages)
 		* 4.2.1. [Notebooks](#Notebooks-1)
 		* 4.2.2. [Plotting the evaluation metrics](#Plottingtheevaluationmetrics-1)
-* 5. [Testing](#Testing)
+5. [Testing](#Testing)
 	* 5.1. [Comparing the Regression Models](#ComparingtheRegressionModels)
 	* 5.2. [Visualizing the outliers](#Visualizingtheoutliers)
 	* 5.3. [Averaging models](#Averagingmodels)
 	* 5.4. [The power of bagging](#Thepowerofbagging)
 	* 5.5. [Evaluation of the Binary Models](#EvaluationoftheBinaryModels)
-* 6. [Deliverable Products](#DeliverableProducts)
+	* 5.6. [Summary](#Summary)
+6. [Deliverable Products](#DeliverableProducts)
 	* 6.1. [Model Production Pipeline](#ModelProductionPipeline)
 		* 6.1.1. [Orchestration](#Orchestration)
 		* 6.1.2. [Retraining Strategy](#RetrainingStrategy)
@@ -38,19 +42,14 @@
 		* 6.2.2. [Basic Install](#BasicInstall)
 	* 6.3. [Web Application](#WebApplication)
 	* 6.4. [API](#API)
-* 7. [Documentation](#Documentation)
-* 8. [Acknowledgments](#Acknowledgments)
+7. [Documentation](#Documentation)
+8. [Acknowledgments](#Acknowledgments)
 	* 8.1. [About the data](#Aboutthedata)
 	* 8.2. [Citation](#Citation)
 	* 8.3. [Author](#Author)
 	* 8.4. [Disclaimer](#Disclaimer)
-* 9. [References](#References)
+9. [References](#References)
 
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc --># IncliNET
  
 ##  1. <a name='Introduction'></a>Introduction
  
@@ -88,7 +87,7 @@ The uncertainties on the measured inclinations are estimated based on the statis
 ####  2.1.1. <a name='Comparingusersadjustedmeasurementsagainsteachother'></a>Comparing users' adjusted measurements against each other
  
 This comparison is very similar to A/B testing. The only difference here is that we divide users into two different groups, A and B. Then, we build the median tables for these groups and compare the inclination of the common galaxies of both tables. This way, we are able to evaluate the statistical uncertainties on the measurements.
-Fig. 3 compares the results of two different groups of users. Evidently, on average, the agreement between two different people about their inclination measurements using our methodology is ~3 degrees. Any machine learning tool that has almost the similar performance is acceptable for our purpose.
+Fig. 2 compares the results of two different groups of users. Evidently, on average, the agreement between two different people about their inclination measurements using our methodology is ~3 degrees. Any machine learning tool that has almost the similar performance is acceptable for our purpose.
 As expected, we see smaller scatter at larger inclination values towards the edge-on galaxies. Practically, it is much easier for users to recognize and evaluate edge-on galaxies, which fortunately is in the favor of our astronomy research, because our sample mainly consists of edge-on galaxies. On the other hand, more scatter about less inclined galaxies (that indicate larger uncertainty on the measured values) and having much smaller number of evaluated galaxies in that region makes it hard for machine learning algorithms to learn from data and have accurate predictions when galaxies tend to be more face-on (smaller inclination values).
  
 ![Fig3](https://user-images.githubusercontent.com/13570487/135530717-544e2580-b940-494e-8063-638b09e70f4c.png)
@@ -102,7 +101,7 @@ For more detail on how we have processed the ground truth results in order to av
  
 ###  2.2. <a name='ImageExtraction'></a>Image Extraction
  
-To obtain the cutout image of each galaxy at g, r, and i bands, we download all corresponding calibrated single exposures from the [SDSS DR12](https://www.sdss.org/dr12/) database. We use [MONTAGE](http://montage.ipac.caltech.edu/), a toolkit for assembling astronomical images, to drizzle all frames and construct galaxy images. The angular scale of the output images is 0.4'' pixel-1. Our data acquisition pipeline is available [online](https://github.com/ekourkchi/SDSS\_get). For the task of manual labeling we presented images to users in 512x512 resolution. For the task of generating and testin multiple ML models, we degrade the resolution of images to 128x128 to make the project feasible given the available resources.
+To obtain the cutout image of each galaxy at g, r, and i bands, we download all corresponding calibrated single exposures from the [SDSS DR12](https://www.sdss.org/dr12/) database. We use [MONTAGE](http://montage.ipac.caltech.edu/), a toolkit for assembling astronomical images, to drizzle all frames and construct galaxy images. The angular scale of the output images is 0.4'' pixel-1. Our data acquisition pipeline is available [online](https://github.com/ekourkchi/SDSS\_get). For the task of manual labeling we presented images to users in 512x512 resolution. For the task of generating and testing multiple ML models, we degrade the resolution of images to 128x128 to make the project feasible given the available resources.
  
  
 ###  2.3. <a name='ImageAugmentation'></a>Image Augmentation
@@ -326,7 +325,7 @@ Three different metrics have been considered to evaluate the classification mode
 - recall = TP/(TP+FN)
 - accuracy = (TP+TN)/(TP+FP+FN+TN)
  
-where `TP` and `FP` are true and false positives, respectively. In a similar way, `TN` and `FN` are true and false negatives, respectively. Precision measures how many of the positive predictions are actually positive. Recall indicates how many of the actuala positive cases have been detected correctly. Accuracy shows the fractions of correct predictions in the entire sample. Fig. 16 visualizes these metrics for different classification models that we considered in this project.
+where `TP` and `FP` are true and false positives, respectively. In a similar way, `TN` and `FN` are true and false negatives, respectively. Precision measures how many of the positive predictions are actually positive. Recall indicates how many of the actual positive cases have been detected correctly. Accuracy shows the fractions of correct predictions in the entire sample. Fig. 16 visualizes these metrics for different classification models that we considered in this project.
  
 ![Fig16](https://user-images.githubusercontent.com/13570487/132331083-961596a8-99a0-442e-bd57-7cda7bbcae6c.png)
  
@@ -334,7 +333,23 @@ where `TP` and `FP` are true and false positives, respectively. In a similar way
  
 Evidently, model #5 has a better overall performance compared to the other two models, which is expected knowing that model #5 is the most complicated one.
 Averaging out the evaluated labels does make significant improvements, however model #5 seems to perform slightly better than the average.
- 
+
+###  5.6. <a name='Summary'></a>Summary
+
+In this project, we trained three different convolutional neural networks (CNN) to automatically evaluate the inclination of the spiral galaxies. All of these networks end with a regression layer which exhibits better performances. The performance of both classification and regression approaches have been extensively explored in the [prototyping stage](#Footnote).
+
+[Our exploratory data analysis](https://github.com/ekourkchi/inclinet_project/blob/main/data_extraction/incNET_dataClean.ipynb) reveals that the distribution of labels (inclinations) is not uniform. Although leveraging the `relu` function for the activation of the last layer results in good models, an inclination dependent bias is evident when we plot the discrepancies between the measured and predicted inclinations. We attributed this to the non-uniformity of inclinations and the fact that inclinations span a finite range of number between 45 and 90 degrees.
+
+We modified our models by changing the activation of the last layer to `Tanh`. We normalized images and linearly adjusted inclination to be compatible with the `Tanh` output that ranges from -1 to 1. Although the bias is still evident, the convergence is reached more quickly. Further tests seem to be necessary to make a concrete conclusion here.
+We repeated the training process of the same CNNs (`Tanh` output layer), with the augmented training samples that have uniform distributions of labels. We report a boost in the performances of our networks, and the prediction-measurement bias seems to be less significant.
+
+Using smaller batch sizes and training the model with more iterations helped to minimize the bias. However part of the bias that originates from the finite coverage of the inclinations cannot be entirely removed.
+
+Ultimately, this analysis recommends us to invoke the regression methodology to get more precise results. To minimize the bias, the labels of the training sample must be uniformed and `Tanh` helps with having better convergence rates and better controlling the outputs. 
+
+<a name='Footnote'></a>**Footnote:**
+Here, we prototyped three different models, all of which treat the problem as a regression problem: https://github.com/ekourkchi/incNET-data/blob/master/incNET_CNN_Colabs/Prototype_RGB64x64_VGGregression.ipynb . For the corresponding classification prototypes please refer to https://github.com/ekourkchi/incNET-data/blob/master/incNET_CNN_Colabs/Prototype_RGB64x64_VGGclassification.ipynb
+
  
 ##  6. <a name='DeliverableProducts'></a>Deliverable Products
  
