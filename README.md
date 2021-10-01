@@ -1,6 +1,6 @@
 <!-- vscode-markdown-toc -->
-* 1. [Introduction](#Introduction)
-* 2. [Data Preparation](#DataPreparation)
+ 1. [Introduction](#Introduction)
+ 2. [Data Preparation](#DataPreparation)
 	* 2.1. [Inclination Labels](#InclinationLabels)
 		* 2.1.1. [Comparing users' adjusted measurements against each other](#Comparingusersadjustedmeasurementsagainsteachother)
 		* 2.1.2. [Notebooks](#Notebooks)
