@@ -1,4 +1,3 @@
-
 # IncliNET
 
 ![inclinet_logo](https://user-images.githubusercontent.com/13570487/134275660-2585ec68-0744-4ad0-b02c-05ddb51bd9e4.png)
@@ -45,7 +44,7 @@ https://github.com/ekourkchi/inclinet_deployment_repo
 
 
 ##  4. <a name='BasicInstall'></a>Basic Install 
-###  4.1. <a name='onalocalmachineusingDocker'></a>on a local machine using Docker
+###  4.1. <a name='onalocalmachineusingDocker'></a>On a local machine using Docker
 
 - First, you need to [install](https://docs.docker.com/compose/install/) Docker Compose. 
 
@@ -76,7 +75,7 @@ where `WEBROOT` is an environmental variable that points to the root of the appl
 **URL**: Following the above example, if the server host is accessible through `www.example.com`, then our application would be launched on `www.example.com/inclinet:pppp`. Remember `http` or `https` by default use ports 80 and 443, respectively.
 
 
-###  4.3. <a name='directlyfromsourcecodes'></a>directly from source codes
+###  4.3. <a name='directlyfromsourcecodes'></a>Directly from source codes
 
 Just put the repository on the server or on a local machine and make sure that folder `<repository>/static` is linked to a folder that is exposed by the server to the outside world. Set `WEBROOT` prior to launching the application to point the application to the correct URL path.
 

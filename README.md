@@ -284,7 +284,7 @@ In a similar way Fig. 12 shows the performance of all models. As seen, in almost
  
 Fig. 13 displays the first 49 galaxy images in the test sample, where the predicted value is far from the actual measurements, i.e. $\Delta i > 10^o$).  In each panel, cyan label is the galaxy ID in the Principal Galaxy Catalog (PGC), and green and red labels represent the measured and the predicted inclinations. Magenta labels denote the panel numbers.
  
-Some cases are interesting:
+We attempt to check out the outliers and see if there is any noticeable similar feature or issues that might cause an issue for the network. We look for noise levels, significant spikes, very bright stars or anything that might have distracted the network from producing the correct answer. Some cases are interesting:
  
 - In panel #42, the galaxy image has been masked out because the bright center of the galaxy has saturated the center of image.
 - Case #26 is a typical case, where the galaxy image has been projected next to a bright star.
