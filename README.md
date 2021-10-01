@@ -137,7 +137,7 @@ https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/incNET_model_
  
 ![Fig7](https://user-images.githubusercontent.com/13570487/135530054-987a33b4-8207-4e4a-8f3b-8e98a7525f85.png)
  
-*Fig. 7: Examples of augmented images. IIn each panel, the PGC ID of the galaxy is in cyan. Red is the classification label and magenta is the image pass-band, i.e. g, r, i and c, where c stands for RGB.*
+*Fig. 7: Examples of augmented images. In each panel, the PGC ID of the galaxy is in cyan. Red is the classification label and magenta is the image pass-band, i.e. g, r, i and c, where c stands for RGB.*
  
  
 ##  3. <a name='Models'></a>Models
