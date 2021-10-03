@@ -36,10 +36,10 @@
 	* 6.1. [Model Production Pipeline](#ModelProductionPipeline)
 		* 6.1.1. [Orchestration](#Orchestration)
 		* 6.1.2. [Retraining Strategy](#RetrainingStrategy)
-		* 6.1.3. [Model Improvements](#ModelImprovements)
+		* 6.1.3. [Suggestions to Improve Models](#ModelImprovements)
 	* 6.2. [Deployment](#Deployment)
 		* 6.2.1. [Code Repository & Issues](#CodeRepositoryIssues)
-		* 6.2.2. [Basic Install](#BasicInstall)
+		* 6.2.2. [Installation](#BasicInstall)
 	* 6.3. [Web Application](#WebApplication)
 	* 6.4. [API](#API)
 7. [Documentation](#Documentation)
@@ -53,8 +53,8 @@
  
 ##  1. <a name='Introduction'></a>Introduction
  
-The inclination of spiral galaxies plays an important role in measurements of their distances and other astronomical analyses. Each galaxy has its own unique morphology, luminosity, and surface brightness profiles. In addition, galaxy images are covered by foreground stars of the Milky Way galaxy. Therefore, it is challenging to design an algorithm that automatically determines the 3D inclination of spiral galaxies. The inclinations of spiral galaxies can be coarsely derived from the ellipticity of apertures used for photometry, assuming that the image of a spiral galaxy is the projection of a disk with the shape of an oblate spheroid. For ~1/3 of spirals, the approximation of axial ratios provides inclination estimates good to better than 5 degrees, with degradation to ~5 degrees for another 1/3. However in ~1/3 of cases, ellipticity-derived inclinations are problematic for a variety of reasons. Prominent bulges can dominate the axial ratio measurement. Some galaxies may not be axially symmetric due to tidal effects. High surface brightness bars within much lower surface brightness disks can lead to large errors. Simply the orientation of strong spiral features with respect to the tilt axis can be confusing. The statistical derivation of inclinations for large samples has been unsatisfactory.
- 
+The inclination of spiral galaxies plays an important role in their astronomical analyses such as measuring their distances using the correlation between their rotation rates and absolute luminosities. Each galaxy has its own unique morphology, luminosity, and surface brightness profiles. In addition, galaxy images are covered by foreground stars of the Milky Way galaxy. Therefore, it is challenging to design an algorithm that automatically determines the 3D inclination of spiral galaxies. The inclinations of spiral galaxies can be coarsely derived from the ellipticity of apertures used for photometry, assuming that the image of a spiral galaxy is the projection of a disk with the shape of an oblate spheroid. For ~1/3 of spirals, the approximation of axial ratios provides inclination estimates good to better than 5 degrees, with degradation to ~5 degrees for another 1/3. However in ~1/3 of cases, ellipticity-derived inclinations are problematic for a variety of reasons. Prominent bulges can dominate the axial ratio measurement. Some galaxies may not be axially symmetric due to tidal effects. High surface brightness bars within much lower surface brightness disks can lead to large errors. Simply the orientation of strong spiral features with respect to the tilt axis can be confusing. The statistical derivation of inclinations for large samples has been unsatisfactory.
+
 The task of manual evaluation of galaxy inclinations is tedious and time consuming. In the future, with the large astronomical survey telescopes coming online, this task could not be efficiently done manually for thousands of galaxies. The objective of this project is to automatically determine the inclination of spiral galaxies with the human level accuracy providing their images, ideally in both colorful and black-and-white formats.
 
 Our collection of carefully measured inclinations provides a rich data set for training a machine-learning algorithm, such as the Convolutional Neural Network (CNN), to replace the human eye in future projects. To successfully instruct such a network to produce satisfactory results, a training set of order ~10,000 representative galaxies is required. Our entire sample is of such a size, and hence suitable for exploring machine-learning capabilities. Moreover, n-body cosmological simulations such as [Illustris](https://www.illustris-project.org/) provide exquisite images of projected spiral galaxies with known 3D orientations that could be of potential interest as training sets for inclination studies.
@@ -78,7 +78,7 @@ To obtain a large enough sample for an ML project, we have manually labelled ~20
 - To increase the accuracy of the results, we catalog the median of at least three different measurements performed by different users.
 - Users may reject galaxies for various reasons and leave comments with the aim of avoiding dubious cases.
  
-The uncertainties on the measured inclinations are estimated based on the statistical scatter in the reported values by different users. Fig. 2 illustrates the distribution of labels, where `J` and `F` labels reject and face-on galaxies, respectively. Numbers indicate the inclination angle of galaxies from face-on in degrees. As seen, out of 19,907, ~22% are rejected for various astronomical reasons and ~8% are face-on thus not acceptable for our original research purpose.
+The uncertainties on the measured inclinations are estimated based on the statistical scatter in the reported values by different users. Fig. 2 illustrates the distribution of labels, where `J` and `F` label rejected and face-on galaxies, respectively. Numbers indicate the inclination angle of galaxies from face-on in degrees. As seen, out of 19,907 galaxies, ~22% are rejected for various astronomical reasons and ~8% are face-on thus not acceptable for our original research purpose.
  
  
 ![Fig2](https://user-images.githubusercontent.com/13570487/135530645-28f40a5f-79e0-4d01-8307-2ce91d2d1e0c.png)
@@ -88,9 +88,11 @@ The uncertainties on the measured inclinations are estimated based on the statis
  
 ####  2.1.1. <a name='Comparingusersadjustedmeasurementsagainsteachother'></a>Comparing users' adjusted measurements against each other
  
-This comparison is very similar to A/B testing. The only difference here is that we divide users into two different groups, A and B. Then, we build the median tables for these groups and compare the inclination of the common galaxies of both tables. This way, we are able to evaluate the statistical uncertainties on the measurements.
-Fig. 2 compares the results of two different groups of users. Evidently, on average, the agreement between two different people about their inclination measurements using our methodology is ~3 degrees. Any machine learning tool that has almost the similar performance is acceptable for our purpose.
-As expected, we see smaller scatter at larger inclination values towards the edge-on galaxies. Practically, it is much easier for users to recognize and evaluate edge-on galaxies, which fortunately is in the favor of our astronomy research, because our sample mainly consists of edge-on galaxies. On the other hand, more scatter about less inclined galaxies (that indicate larger uncertainty on the measured values) and having much smaller number of evaluated galaxies in that region makes it hard for machine learning algorithms to learn from data and have accurate predictions when galaxies tend to be more face-on (smaller inclination values).
+This comparison is very similar to the A/B testing. Here, the only difference is that we divide users into two different groups, A and B. Then, we calculate the median of evaluated labels by these groups and compare the inclination of the common galaxies of both tables. This way, we are able to evaluate the statistical uncertainties on the measurements.
+
+Fig. 3 compares the results of two different groups of users. Evidently, on average, the agreement between two different people about their inclination measurements y is ~3 degrees. Any machine learning tool that has almost the similar performance is acceptable for our purpose.
+
+As expected, we see smaller scatter at larger inclination values towards the edge-on galaxies. Practically, it is much easier for users to recognize and evaluate edge-on galaxies, which fortunately is in the favor of our astronomy research. This explains why our sample mainly consists of edge-on galaxies. On the other hand, more scatter about less inclined galaxies (that indicate larger uncertainty on the measured values) and having much smaller number of evaluated galaxies in that region makes it hard for machine learning algorithms to learn from data and have accurate predictions when galaxies tend to be more face-on (smaller inclination values).
  
 ![Fig3](https://user-images.githubusercontent.com/13570487/135530717-544e2580-b940-494e-8063-638b09e70f4c.png)
  
@@ -98,21 +100,23 @@ As expected, we see smaller scatter at larger inclination values towards the edg
  
 ####  2.1.2. <a name='Notebooks'></a>Notebooks
  
-For more detail on how we have processed the ground truth results in order to avoid any human related mistakes or biases please refer to this notebook: https://github.com/ekourkchi/inclinet_project/blob/main/data_extraction/incNET_dataClean.ipynb
+For more details on how we have processed the ground truth results in order to avoid any human related mistakes or biases please refer to this notebook: https://github.com/ekourkchi/inclinet_project/blob/main/data_extraction/incNET_dataClean.ipynb
  
  
 ###  2.2. <a name='ImageExtraction'></a>Image Extraction
  
-To obtain the cutout image of each galaxy at g, r, and i bands, we download all corresponding calibrated single exposures from the [SDSS DR12](https://www.sdss.org/dr12/) database. We use [MONTAGE](http://montage.ipac.caltech.edu/), a toolkit for assembling astronomical images, to drizzle all frames and construct galaxy images. The angular scale of the output images is 0.4'' pixel-1. Our data acquisition pipeline is available [online](https://github.com/ekourkchi/SDSS\_get). For the task of manual labeling we presented images to users in 512x512 resolution. For the task of generating and testing multiple ML models, we degrade the resolution of images to 128x128 to make the project feasible given the available resources.
+To obtain the cutout image of each galaxy at g, r, and i bands, we download all corresponding calibrated single exposures from the [SDSS DR12](https://www.sdss.org/dr12/) database. We use [MONTAGE](http://montage.ipac.caltech.edu/), a toolkit for assembling astronomical images, to drizzle all frames and construct galaxy images. The angular scale of the output images is 0.4'' pixel-1. Our data acquisition pipeline is available [online](https://github.com/ekourkchi/SDSS\_get). For the task of manual labeling we presented images to users in 512x512 resolution. For the task of generating and testing multiple ML models, we degrade the resolution of images to 128x128. This allows us to make the project feasible given the available resources.
  
  
 ###  2.3. <a name='ImageAugmentation'></a>Image Augmentation
  
-We convert all input images to 128x128. To avoid over-fitting, we increase the sample size by leveraging the augmentation methods. The inclination of each galaxy is independent of its position angle on the projected image as well as the image quality. Therefore, we augment our image sample by running them through a combination of transformations such as rotation, translation, mirroring, additive Gaussian noise, altering contrast, blurring, etc.
-All augmentation transformations keep the aspect ratio of images intact to ensure that the elliptical shape of galaxies and their inclinations are preserved. Other augmentation criteria are as following
-The numbers of colorful (RGB) and grayscale (g, r, i) images are equal
-The numbers of black-on-white and white-on-black images are the same
-g, r, i images have equal chance of appearance in each batch
+To avoid over-fitting, we increase the sample size by leveraging the augmentation methods. The inclination of each galaxy is independent of its projected position angle on the image and the image quality. Therefore, we augment our image sample by running them through a combination of transformations such as rotation, translation, mirroring, additive Gaussian noise, altering contrast, blurring, etc. 
+
+All image transformations that are applied in the augmentation process keep the aspect ratio of images intact to ensure that the elliptical shape of galaxies and their inclinations are preserved. The augmented sample is required to satisfy the following criteria
+
+- The numbers of colorful (RGB) and grayscale (g, r, i) images are equal
+- The numbers of black-on-white and white-on-black images are the same
+- The g, r, and i-band images have equal chance of appearance in each batch
  
   
 ![Fig4](https://user-images.githubusercontent.com/13570487/135529446-134617dc-9ba6-4834-a11d-487c7f5a7025.png)
@@ -121,46 +125,47 @@ g, r, i images have equal chance of appearance in each batch
  
 ![Fig5](https://user-images.githubusercontent.com/13570487/135529776-cbe10cf2-22dc-4a87-b447-8d9b94842d20.png)
  
-*Fig. 5 : Examples of augmented images. In each panel, the galaxy ID is in cyan. Red is the inclination and magenta is the image pass-band, i.e. g, r, i and c, where c stands for RGB.*
+*Fig. 5 : Examples of augmented images. In each panel, galaxy ID is in cyan. Red is the inclination and magenta is the image pass-band, i.e. g, r, i and c, where c stands for RGB.*
  
 ####  2.3.1. <a name='Notebooks-1'></a>Notebooks
  
-1. Here, data is processed for models to determine the inclinations of spiral galaxies by leveraging the regression methodologies. Fig. 4 illustrates the distribution of inclinations in both original and augmented samples. Fig. 5 displays a set of augmented images as an example.
+1. Here, data is processed for models to determine the inclinations of spiral galaxies by leveraging the regression methodologies. Fig.4 illustrates the distribution of inclinations in both original and augmented samples. Fig. 5 displays a subset of augmented images. 
 https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/incNET_model_augmentation.ipynb
  
-2. Here, data is processed for models to determine the usefulness of spiral galaxies for the task of inclination measurements by leveraging the classification methodologies. We are dealing with binary labels, where 0 denotes accepted galaxies, and 1 represents rejected images due to various anomalies, and ambiguities, or having poor quality. A few face-on galaxies (those with inclination lower than 45 degrees from face-on) have also been rejected. Fig. 6 illustrates the distribution of labels in the original and augmented samples. Fig. 7 shows a subset of augmented galaxies with their labels. 
+2. Here, data is processed for models that determine the usefulness of spiral galaxies for the task of evaluating inclinations by taking the classification approaches. Labels are presented in the binary form, where 0 denotes the accepted galaxies, and 1 represents the rejected ones due to various reasons, such as anomalies, ambiguities, or having poor quality or an unsatisfactory Hydrogen 21cm spectrum. A  number of face-one galaxies (those with inclination lower than 45 degrees from face-on) that had originally passed our original sample selection criteria were also rejected. Fig. 6 illustrates the distribution of labels in the original and augmented samples. Fig. 7 shows a subset of augmented galaxies with their labels.  
 https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/incNET_model_augmentation-binary.ipynb
  
  
 ![Fig6](https://user-images.githubusercontent.com/13570487/135529972-eb037bbd-7531-4da2-88d2-85a64ac7a77b.png)
  
-*Fig. 6: Left: Distribution of the labels of the original sample galaxies. Right: Distribution of the sample labels after augmentation. As expected, each batch covers both labels uniformly. This reduces any biases that originate from the data imbalance.*
+*Fig. 6: Left: Distribution of the labels of the original sample galaxies. Right: Distribution of the sample labels after augmentation. Each batch covers both labels uniformly. This reduces any biases that originate from the data imbalance.*
  
  
 ![Fig7](https://user-images.githubusercontent.com/13570487/135530054-987a33b4-8207-4e4a-8f3b-8e98a7525f85.png)
  
-*Fig. 7: Examples of augmented images. In each panel, the PGC ID of the galaxy is in cyan. Red is the classification label and magenta is the image pass-band, i.e. g, r, i and c, where c stands for RGB.*
+*Fig. 7: Examples of augmented images. In each panel, the PGC ID of the galaxy is in cyan. Red is the classification label and magenta is the image pass-band, i.e. g, r, i and c, with c representing RGB images.*
  
  
 ##  3. <a name='Models'></a>Models
  
 Models have been define in this auxiliary code: https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/TFmodels.py
  
-Our main objectives are to evaluate the inclination of a spiral galaxy from its images, whether it is presented in grayscale or colorful formats. Moreover, we need to know what is the possibility of the rejection of the given image by a human user. Images are rejected in cases they have poor quality or contain bright objects that influence the process of measuring the inclination of the target galaxy. Very face-on galaxies are also rejected.
+Our main objective is to evaluate the inclination of a spiral galaxy from its images, whether it is presented in grayscale or colorful. Moreover, we need to know what is the possibility of the rejection of a given image by a human user. Images are rejected in cases they have poor quality or contain bright objects that influence the evaluation process. Very face-on galaxies are also rejected.
  
 We tackle the problem from two different angles.
  
-1. To determine the inclination of galaxies, we investigate 3 models, each of which is constructed based on the VGG network, where convolutional filters of size 3x3 are used. The last layer benefits from the tanh activation function to generate numbers in a finite range, because the spatial inclination of our spirals sample lies in a range of 45 to 90 degrees.
+1. To determine the inclination of galaxies, we investigate 3 models, each of which is constructed based on the VGG network, where convolutional filters of size 3x3 are used. The last layer benefits from the `tanh` activation function to generate numbers in a finite range, because the spatial inclination of our spirals falls into a finite range (45 to 90 degrees).
  
-2. To determine the accept/reject labels, we build three other networks which are very similar to the regression networks except the very last layer which is devoted to binary classification.
+2. To determine the accept/reject labels, we build three other networks which are very similar to the regression networks except for the very last layer with the `softmax` activation function for binary classification.
  
-Models have different complexity levels and are labeled as model4, model5 and model6, with model4 being the simplest one. Here, we briefly introduce different models that we consider in this study.
+Models have different complexity levels and are labeled as [model4](Model4), [model5](Model5) and [model6](Model6), with model4 being the simplest one. In the following sections, we briefly introduce different models that we considered in this study.
+
  
-For clarity, we label our models as `model<n>(m)`, where`<n>` is the model label which can be 4, 5, and 6. `<m>` denotes the “flavor of the model”, where m=0 represents a model that is trained using the entire training sample. m0  stands for models that have been trained using 67% of data.
+For clarity, we label our models as `model<n>(m)`, where`<n>` is the model label which can be 4, 5, and 6. `<m>` denotes the “flavor of the model”, where m=0 stands for a model that is trained utilizing the entire training sample. $m \neq 0$ represent models that have been trained using 67% of the data.
  
 ###  3.1. <a name='Model4'></a>Model 4
  
-This is the simplest model in our series of models. The total weight number of this model is ~1.600,000. It has two sets of double convolutional layers. Fig. 8 visualizes the convolutional neural network of Mode 4.
+This is the simplest model in our series of models. The total number of free parameters of this model is ~1.600,000. It consists of two sets of double convolutional layers. Fig. 8 visualizes the convolutional neural network of Mode 4.
  
 ![Model4](https://user-images.githubusercontent.com/13570487/135531201-cdcf96eb-b793-4bbb-8a20-bcbefa2b3251.png)
  
@@ -184,11 +189,12 @@ This model is comparable to Model4, in terms of complexity, although the number 
  
 ##  4. <a name='Training'></a>Training
  
-Here, we train a VGG model using the augmented data. The data augmentation process has been explained above. The output augmented data has been stored on disk for the purpose of the following analysis.
+Here, we train a VGG model using the augmented data. The data augmentation process has been explained above. The output augmented data has been stored on disk for the purpose of the following analysis. We set aside 10% of the sample galaxies for the purpose of testing (model evaluations).
+
  
 ###  4.1. <a name='Regressiondetermininginclinations'></a>Regression, determining inclinations
  
-128x128 images are used for this analysis, which are in grayscale (g,r,i filter) or colorful (RGB). All images are presented in 3 channels. For grayscale images, all three channels are the same. Inclinations range from 45 to 90 degrees. Half of the grayscale images have black background, i.e. galaxies and stars are in white color. In half of the grayscale cases, objects are in black on white background. Half of the sample is in grayscale, and the other half is in grayscale. The augmentation process has been forced to generate images that cover the entire inclinations uniformly. We adopt the “Adam” optimizer, and the “Mean Square Error” for the loss function, and we keep track of the MSE and MAE metric during the training process.
+128x128 images are used for this analysis, which are in grayscale (g,r,i filter) or colorful (RGB). All images are presented in 3 channels. For grayscale images, all three channels are the same. Inclinations range from 45 to 90 degrees. Half of the grayscale images have black background, i.e. galaxies and stars are in white color while the background is dark. In half of the grayscale cases, objects are in black on white background. Half of the sample is in grayscale, and the other half is in grayscale. The augmentation process has been forced to generate images that cover the entire range of inclinations uniformly. We adopt the `Adam` optimizer, and the `Mean Square Error` (MSE) for the loss function, and we keep track of the MSE and MAE (Mean Absolute Error) metrics during the training process.
  
 ####  4.1.1. <a name='Notebooks-1'></a>Notebooks
  
@@ -200,26 +206,28 @@ https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Train
  
 ####  4.1.2. <a name='Challenges'></a>Challenges
  
-With 128x128 images, and adding augmentation, the size of the required memory to open up the entire augmented sample is out of the capability of the available machines. Thus, we resolved the problem by saving the training sample in 50 separate batches that are already randomized in any way. Each step of the training process starts with loading the corresponding batch, reconstructing the CNN as it was generated in the previous iteration, and advancing the training process for one more step. At the end of that repetition, we store a snapshot of the network weights for the next training step.
+With 128x128 images, and adding augmentation, the size of the required memory to open up the entire augmented sample is out of the capability of the available machines (64 GB of RAM). Hence, we attempted to resolve the issue by storing the training sample in 50 separate batches on disk. All batches are already randomized in any way. Each step of the training process starts with loading the corresponding batch, reconstructing the CNN as it was generated in the previous iteration, and advancing the training process for one more step. At the end of that repetition, we store a snapshot of the network weights for the next training step.
  
 ####  4.1.3. <a name='Notes'></a>Notes
  
-- Since we are dealing with a large training sample, we need to repeat updating the network weights for many steps to cover all training batches several times
-- Over-fitting sometimes helps to minimize the prediction-measurement bias
+- Since we are dealing with a large training sample, we need to repeat updating the network parameters for many steps to cover all training batches multiple times
+- Over-fitting sometimes helps to minimize the prediction-measurement bias (this would be further discussed in the **Testing** section)
+
  
 ####  4.1.4. <a name='Pros'></a>Pros
  
-- We can generate as many training galaxies as required without being worry about the memory size
+- We can generate as many training galaxies as required without being worried about the memory size
 - We can stop the training process at any point and continue the process from where it is left. This helps is the process crashes due to the lack of enough memory that happens if other irrelevant processes clutter the system
-- We are able to constantly monitor the training process and make decisions as it goes on
+- We are able to constantly monitor the training process and make decisions as it advances
+
  
 ####  4.1.5. <a name='Cons'></a>Cons
  
-- This process is slow. The bottleneck is the i/o process, not training and updating the weight numbers of the network.
+- This process is slow. The bottleneck is the i/o processes, not training and updating the network parameters.
  
 ####  4.1.6. <a name='Plottingtheevaluationmetrics'></a>Plotting the evaluation metrics
  
-As illustrated in Fig. 9, the training process can be stopped about the iteration #1000, however a little bit of over training helps to remove the prediction-measurement bias and reduce the size of fluctuations in the metrics.
+As illustrated in Fig. 9, the training process can be stopped about the iteration #1000, however a little bit of over training helps to remove the prediction-measurement bias and reduces the magnitude of fluctuations in the evaluation metrics.
  
  
 ![Fig9](https://user-images.githubusercontent.com/13570487/135531689-799b0abd-0ba5-4da6-8122-10cec42aab48.png)
@@ -228,17 +236,14 @@ As illustrated in Fig. 9, the training process can be stopped about the iteratio
  
 ###  4.2. <a name='Classificationdetermininggoodbadgalaxyimages'></a>Classification, determining good/bad galaxy images
  
-Here, we train a VGG model using the augmented data. Data augmentation has been done separately in another code and the output data has been stored on disk for the purpose of the following analysis.
+To distinguish between accepted and rejected spiral galaxies for the purpose of our study, we train a VGG model using the augmented images that have been generated following the same procedure we explained in the previous section. 
  
-128x128 images are used for this analysis, which are in grayscale (g,r,i filter) or colorful (RGB). All images are presented in 3 channels. For grayscale images, all three channels are the same. Labels are either 0 or 1.
- 
- 
-- 0: galaxy images with well defined and measured inclinations, that are used for the distance analysis in a separate research
+- 0: galaxy images with well-defined and measured inclinations, that are used for the distance analysis in a separate research
 - 1: galaxies that are flagged to be either face-on (inclinations less than 45 degrees from face-on), or to have poor image quality. Deformed galaxies, non-spiral galaxies, confused images, multiple galaxies in a field, galaxy images that are contaminated with bright foreground stars have been also flagged and have label 1.
  
-We adopt the same network trained to determine inclinations. Here for binary classification, the last layer activation function has been changed to Softmax with sparse categorical entropy as the loss function. We keep track of the accuracy metric during the training process.
+Here, we leverage the same networks we adopted for the inclination evaluation. For binary classification, the activation function of the last layer is replaced by the `softmax` function, and the network is trained with the `sparse categorical entropy` as the loss function. We keep track of the `accuracy` metric during the training process.
  
-**Objective:** The goal is to train a network for automatic rejection of unaccepted galaxies. These galaxies can be later manually studied or investigated by human users.
+**Objective:** The goal is to train a network for automatic rejection of the unaccepted galaxies. These galaxies can be later manually studied or investigated by human users.
  
 ####  4.2.1. <a name='Notebooks-1'></a>Notebooks
  
@@ -250,7 +255,7 @@ https://github.com/ekourkchi/inclinet_project/blob/main/VGG_models/128x128_Train
  
  
 ####  4.2.2. <a name='Plottingtheevaluationmetrics-1'></a>Plotting the evaluation metrics
-According to Fig. 10, after about 200 iterations, the loss function of the training sample decreases while the performance gets worse on the test sample. This means that over-training the network after this point doesn't improve the outcome.
+According to Fig. 10, after about 200 iterations, the loss function of the training sample decreases while the performance gets worse on the validation sample. This means that over-training the network after this point doesn't improve the overall efficiency.
  
 ![Fig10](https://user-images.githubusercontent.com/13570487/135531763-7dc87f62-243a-4c87-a3df-9992344e1518.png)
  
@@ -258,40 +263,41 @@ According to Fig. 10, after about 200 iterations, the loss function of the train
  
  
 ##  5. <a name='Testing'></a>Testing
+
+10% of the galaxies in our sample have been chosen and left out of the analysis for evaluating the performance of the models. The testing images are augmented in the same fashion by following the same recipe we used to prepare the training batches.
  
 ###  5.1. <a name='ComparingtheRegressionModels'></a>Comparing the Regression Models
  
 **Predictions vs. Actual measurements**
  
-We cross compare the evaluated inclinations versus the actual labels.
+We evaluate the performance of models based on the accuracy of their predictions. To better understand the performance of a model, we plot the differences between the evaluated inclinations and the manually measured values, i.e. $\Delta i = i_m-i_p$. In Fig. 11, the horizontal axis shows the measured inclinations. Each point represents a galaxy in the test sample. 
  
-To get a better understanding of the model performance, we plot the difference between the evaluated inclinations and the measured values by users ($\Delta i = i_m-i_p$). In Fig. 11, the horizontal axis shows the measured inclinations. Each point represents a galaxy in the test sample.
- 
-- **Left Panel:** Predicted values $i_p$, are directly generated by applying the trained network on the test sample. Red solid line displays the results of a least square linear fit on the blue points. Evidently, there is an inclination dependent bias that is inclination dependent. This bias has been linearly modeled by the red line, which is utilized to adjust the predicted values. The slope and intercept of the fitted line are encoded in the `m` and `b` parameters.
-- **Right Panel:** Same as the left panel, with adjusted predictions, $i_{pc}$, that is calculated using $i_{pc}=(i_p+b)/(1-m)$.
+- **Left Panel:** Predicted values $i_p$, are directly generated by processing the testing sample through the same network. Red solid line displays the results of a least square linear fit on the blue points. Some models exhibit an inclination dependent bias that is inclination dependent. This bias has been linearly modeled by the red line, which is utilized to adjust the predicted values. The slope and intercept of the fitted line are encoded in the `m` and `b` parameters.
+
+- **Right Panel:** Same as the left panel, but with the adjusted values, $i_{pc}$, that is calculated using $i_{pc}=(i_p+b)/(1-m)$.
  
 ![Fig11](https://user-images.githubusercontent.com/13570487/135532545-021d74c6-4cfb-49bf-886f-227d096e3bb7.png)
  
 *Fig. 11: Discrepancy between predictions and actual values for mode 4 with the test sample*
+
+The root mean square of the prediction-measurements differences is ~4o. The similar metric is ~2.6o when we compare the measured values of two groups of the human users. This means our model performs slightly worse than human, and most of that poor performance is attributed to the outliers and ano,aly features such as data noise, point sources, stellar spikes, poor images, etc. with not enough instances in the data sample to have significant influence on the trained network.
  
-**Note:** The root mean square of the prediction-measurements differences is ~4o. The similar metric is ~2.6o when we compare the measured values of two groups of the human users. This means our model performs slightly worse than human, and most of that poor performance is attributed to the outliers and features (like data noise, point sources, stellar spikes, poor images, etc.) with not enough data coverage.
- 
-In a similar way Fig. 12 shows the performance of all models. As seen, in almost all cases the prediction bias is at minimum and not that significant. Each panel displays the results of a model, and is labeled with the name of the corresponding model. RMS and MAE denote “Root Mean Square” and “Mean Absolute Error” of the deviations of i about zero. At first glance, Model #5 seems to have the best performance, which does not come as a surprise, because it is the most complicated model that we have considered. In general, the differences in the performance of different models is not that significant.
+In a similar way, Fig. 12 compares the performances of all models. As seen, in almost all cases the prediction bias (the slope of the red line) is at minimum and not that significant. Each panel displays the results of one model, and is labeled with the name of the corresponding model. RMS and MAE denote “Root Mean Square” and “Mean Absolute Error” of the deviations of i about zero. At first glance, Model #5 seems to have the best performance, which does not come as a surprise, because it is the most complicated model, in terms of the number of free parameters. In general, the differences in the performances is not that significant.
  
 ![Fig12](https://user-images.githubusercontent.com/13570487/135532635-2afc04c5-d7b5-43e0-9c6f-25d1c5e62454.png)
  
-*Fig. 12: The performance of all studied models using the test sample. Each panel illustrates the results of a model labeled as `model<n>(m)`, with `<n>` being the model number which can be 4, 5, and 6.  `<m>` denotes the “flavor of the model”.*
+*Fig. 12: The performance of all studied models using the test sample. Each panel illustrates the results of a model labeled as `model<n>(m)`, with `<n>` being the model number which can be 4, 5, and 6.  `<m>` denotes the “flavor of the model”, where m=0 stands for a model that is trained utilizing the entire training sample. $m \neq 0$ represent models that have been trained using 67% of the data.*
  
 ###  5.2. <a name='Visualizingtheoutliers'></a>Visualizing the outliers
  
-Fig. 13 displays the first 49 galaxy images in the test sample, where the predicted value is far from the actual measurements, i.e. $\Delta i > 10^o$).  In each panel, cyan label is the galaxy ID in the Principal Galaxy Catalog (PGC), and green and red labels represent the measured and the predicted inclinations. Magenta labels denote the panel numbers.
+Fig. 13 displays the first 49 galaxy images in the test sample, where the predicted value is far from the actual measurements, i.e. $\Delta i > 10^o$).  In each panel, cyan label is the galaxy ID in the *Principal Galaxy Catalog* (PGC), and green and red labels represent the measured and the predicted inclinations. Magenta labels denote the panel numbers.
  
-We attempt to check out the outliers and see if there is any noticeable similar feature or issues that might cause an issue for the network. We look for noise levels, significant spikes, very bright stars or anything that might have distracted the network from producing the correct answer. Some cases are interesting:
+We attempt to check out the outliers and see if there is any noticeable similar feature or issues that might explain the poor outcome of the network. We look for noise levels, significant spikes, very bright stars or anything that might have distracted the network from producing the correct answer. Some cases are interesting:
  
-- In panel #42, the galaxy image has been masked out because the bright center of the galaxy has saturated the center of image.
+- In panel #42, the galaxy image has been masked out because the bright center of the galaxy has saturated the image center.
 - Case #26 is a typical case, where the galaxy image has been projected next to a bright star.
 - Cases like #2, #14, #23, #29, #43 have poor quality images.
-- Case #37 has been ruined in the data reduction process, when the telescope data has been preprocessed.
+- Case #37 has been ruined in the data reduction pipeline, where the telescope images are preprocessed.
  
 ![Fig13](https://user-images.githubusercontent.com/13570487/135532840-bcfb91f7-8f99-4ed9-ac52-1137e2e68c4c.png)
  
@@ -299,18 +305,18 @@ We attempt to check out the outliers and see if there is any noticeable similar 
  
  
 ###  5.3. <a name='Averagingmodels'></a>Averaging models
-We take two average types to combine the results of various models and possibly obtain better results, mean and median.  We generate 4 sets of averages
+We take two average types to combine the results of various models and possibly obtain better results, namely mean and median.  We generate 4 sets of averages
  
-- averaging the results of all model4 flavors
-- averaging the results of all model5 flavors
-- averaging the results of all model6 flavors
+- averaging the results of all model4 flavors (0, 1, 2, 3)
+- averaging the results of all model5 flavors (0, 1, 2, 3)
+- averaging the results of all model6 flavors (0, 1, 2, 3)
 - averaging the results of all models with various flavors
  
-We don't see any significant differences between mean and median, so there is no way we prefer one of them. However, we recommend using the median just to ignore very severe outliers.
+We don't see any significant differences between `mean` and `median`, so there is no way we prefer one of them over the others. However, we recommend using the median just to ignore very severe outliers.
  
 ###  5.4. <a name='Thepowerofbagging'></a>The power of bagging
  
-As inferred from Figures 14 and 15, when the results of all models are averaged out, we get the best performance. RMS and MAE of deviations of the average of all models from the measured values are 3.09 and 2.12 [deg], respectively, which is comparable with the performance of humans.
+As inferred from Figures 14 and 15, when the results of all models are averaged out, we get the best performance. The average of all models turns out to have the smallest deviations in the predicted-measured differences with the RMS and MAE of 3.09 and 2.12 [deg], respectively. This is relatively comparable with human performance.
  
 ![Fig14](https://user-images.githubusercontent.com/13570487/132321203-7362280a-8213-4cd8-80a5-efa53188e2e3.png)
  
@@ -333,21 +339,23 @@ where `TP` and `FP` are true and false positives, respectively. In a similar way
  
 *Fig. 16: The performance metrics of the various classification models in this study*
  
-Evidently, model #5 has a better overall performance compared to the other two models, which is expected knowing that model #5 is the most complicated one.
-Averaging out the evaluated labels does make significant improvements, however model #5 seems to perform slightly better than the average.
+Evidently, `model5` has a better overall performance compared to the other two models, which is expected knowing that model #5 is the most complicated one.
+Averaging out the evaluated labels does make significant improvements, however `model5` seems to perform slightly better than the average.
 
 ###  5.6. <a name='Summary'></a>Summary
 
-In this project, we trained three different convolutional neural networks (CNN) to automatically evaluate the inclination of the spiral galaxies. All of these networks end with a regression layer which exhibits better performances. The performance of both classification and regression approaches have been extensively explored in the [prototyping stage](#Footnote).
+In this project, we trained three different convolutional neural networks (CNN) to automatically evaluate the inclination of the spiral galaxies. The performance of both classification and regression approaches have been extensively explored in the [prototyping stage](#Footnote), where we conclude that all of the CNN models that end with a regression layer exhibit better performances.
 
-[Our exploratory data analysis](https://github.com/ekourkchi/inclinet_project/blob/main/data_extraction/incNET_dataClean.ipynb) reveals that the distribution of labels (inclinations) is not uniform. Although leveraging the `relu` function for the activation of the last layer results in good models, an inclination dependent bias is evident when we plot the discrepancies between the measured and predicted inclinations. We attributed this to the non-uniformity of inclinations and the fact that inclinations span a finite range of number between 45 and 90 degrees.
+[Our exploratory data analysis](https://github.com/ekourkchi/inclinet_project/blob/main/data_extraction/incNET_dataClean.ipynb) reveals that the distribution of labels (inclinations) is not uniform. Although leveraging the `relu` function for the activation of the last layer results in building good models, an inclination dependent bias is evident when we plot the discrepancies between the measured and predicted inclinations. We attributed this to the non-uniform distribution of inclinations and the fact that inclinations span a finite range of numbers between 45 and 90 degrees.
 
-We modified our models by changing the activation of the last layer to `Tanh`. We normalized images and linearly adjusted inclination to be compatible with the `Tanh` output that ranges from -1 to 1. Although the bias is still evident, the convergence is reached more quickly. Further tests seem to be necessary to make a concrete conclusion here.
-We repeated the training process of the same CNNs (`Tanh` output layer), with the augmented training samples that have uniform distributions of labels. We report a boost in the performances of our networks, and the prediction-measurement bias seems to be less significant.
+We modified our models by changing the activation of the last layer to `Tanh`. We normalized images and linearly adjusted inclination to be compatible with the `Tanh` output that ranges from -1 to 1. Although the bias is still evident, the convergence is achieved more quickly. Further tests seem to be necessary to make a concrete conclusion here.
 
-Using smaller batch sizes and training the model with more iterations helped to minimize the bias. However part of the bias that originates from the finite coverage of the inclinations cannot be entirely removed.
+We repeated the training process of the same CNNs (with `Tanh` output layer) by utilizing the augmented training samples that have uniform distributions of labels. We report a boost in the performances of our networks, while the prediction-measurement bias seems to be off less significance.
 
-Ultimately, this analysis recommends us to invoke the regression methodology to get more precise results. To minimize the bias, the labels of the training sample must be uniformed and `Tanh` helps with having better convergence rates and better controlling the outputs. 
+Using smaller batch sizes and training models with more iterations helped to minimize the bias. However, part of the bias that originates from the finite coverage of the inclinations could not be entirely removed.
+
+Ultimately, this analysis recommends us to invoke the regression methodology to get more precise results. To minimize the bias, the labels of the training sample must be relatively and `Tanh`  helps with having better convergence rates through generating outputs in a finite range.
+
 
 <a name='Footnote'></a>**Footnote:**
 Here, we prototyped three different models, all of which treat the problem as a regression problem: https://github.com/ekourkchi/incNET-data/blob/master/incNET_CNN_Colabs/Prototype_RGB64x64_VGGregression.ipynb . For the corresponding classification prototypes please refer to https://github.com/ekourkchi/incNET-data/blob/master/incNET_CNN_Colabs/Prototype_RGB64x64_VGGclassification.ipynb
@@ -416,11 +424,11 @@ Visit this folder on gitHub for the codes: https://github.com/ekourkchi/inclinet
 - The retrained model would be shipped to the deployment container in h5 or pickled format.
 - In the case of retraining, new data should be preprocessed to be compatible with our training pipeline. Each telescope and instrument has its own characteristics. The best practice is to generate 512x512 postage stamp images of galaxies through the telescope's APIs, or the FTP/HTTP services.
  
-####  6.1.3. <a name='ModelImprovements'></a>Model Improvements
+####  6.1.3. <a name='ModelImprovements'></a>Suggestions to improve models
  
-- The best way is to create many synthetic galaxy images, with known inclinations. The results of galaxy simulations can be visualized at various spatial inclinations under controlled situations. Later, the resolution can be tuned to different levels and the foreground, background objects can be superimposed on the image. Additional noise and ambiguities can be added to images. All of these factors allow the network to gain enough expertise on different examples of galaxy images.
+- One of the recommended methods is to create many synthetic galaxy images, with known inclinations. The results of galaxy simulations  (such as [Illustris](https://www.illustris-project.org/)) can be visualized at various spatial inclinations under controlled situations. Later, the resolution can be tuned to different levels and the foreground, background objects can be superimposed on the image. Additional noise and ambiguities can be added to images. All of these factors allow the network to gain enough expertise on different examples of galaxy images.
 - To build more complicated models, we can present all images taken at different wavebands in separate channels, instead of parsing them as single entities. All passbands can be fed into the CNN at once.
-- Images can be used in raw format. The dynamical range of the astronomical images are way beyond the 0-255 range. Instead of downscaling the dynamical range to produce visualizable images, we can use the full dynamical range of the observations
+- Images can be used in raw format. The dynamical range of the astronomical images are way beyond the 0-255 range. Instead of downscaling the dynamical range to produce visualizable images, one can use the full dynamical range of the observed images.
  
 ###  6.2. <a name='Deployment'></a>Deployment
  
@@ -432,10 +440,11 @@ Fig. 20 illustrates the deployment unit.
  
 ####  6.2.1. <a name='CodeRepositoryIssues'></a>Code Repository & Issues
  
+All deployment source codes are available on gitHub:
 https://github.com/ekourkchi/inclinet_deployment_repo
  
  
-####  6.2.2. <a name='BasicInstall'></a>Basic Install
+####  6.2.2. <a name='BasicInstall'></a>Installation
 ##### On a local machine using Docker
  
 - First, you need to [install](https://docs.docker.com/compose/install/) Docker Compose.
@@ -518,15 +527,15 @@ Entering the name of a galaxy by querying its PGC number (the ID of galaxy in th
  
 2. **Galaxy Name**
  
-Searching a galaxy by its common name. - The entered name is queried through the [NASA/IPAC Extragalactic Database](http://ned.ipac.caltech.edu/). Then, a python routine based on the package [Beautiful Soup](https://beautiful-soup-4.readthedocs.io/en/latest/#) extracts the corresponding PGC number. Once the PGC ID is available, the galaxy image is imported from the SDSS quick-look as explained above.
+Searching a galaxy by its common name. - The entered name is queried through the [NASA/IPAC Extragalactic Database](http://ned.ipac.caltech.edu/). Then, a python routine based on the package [Beautiful Soup](https://beautiful-soup-4.readthedocs.io/en/latest/#) extracts the corresponding PGC number. Once the PGC ID is available, the galaxy image is imported from the SDSS quick-look.
  
 3. **Galaxy Coordinates**
  
-Looking at a specific location in the sky by entering the sky coordinates and the field size. In the first release we only provide access to the SDSS images, if they are available. [The SDSS coverage](https://www.sdss.org/dr16/) is mainly limited to the Northern sky.
+A specific location in the sky can be queried by entering the sky coordinates and the field size. In the first release we only provide access to the SDSS images, if they are available. [The SDSS coverage](https://www.sdss.org/dr16/) is mainly limited to the Northern sky.
  
 4. **Galaxy Image**
  
-Uploading a galaxy image from the local computer of the user. - User has the option of uploading a galaxy image for evaluation by our model(s)
+Uploading a galaxy image from the local computer of the user. User has the option of uploading a galaxy image for evaluation(s) by our model(s).
  
  
 ###  6.4. <a name='API'></a>API
