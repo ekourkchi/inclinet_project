@@ -105,7 +105,7 @@ For more details on how we have processed the ground truth results in order to a
  
 ###  2.2. <a name='ImageExtraction'></a>Image Extraction
  
-To obtain the cutout image of each galaxy at g, r, and i bands, we download all corresponding calibrated single exposures from the [SDSS DR12](https://www.sdss.org/dr12/) database. We use [MONTAGE](http://montage.ipac.caltech.edu/), a toolkit for assembling astronomical images, to drizzle all frames and construct galaxy images. The angular scale of the output images is 0.4'' pixel-1. Our data acquisition pipeline is available [online](https://github.com/ekourkchi/SDSS\_get). For the task of manual labeling we presented images to users in 512x512 resolution. For the task of generating and testing multiple ML models, we degrade the resolution of images to 128x128. This allows us to make the project feasible given the available resources.
+To obtain the cutout image of each galaxy at g, r, and i bands, we download all corresponding calibrated single exposures from the [SDSS DR12](https://www.sdss.org/dr12/) database. We use [MONTAGE](http://montage.ipac.caltech.edu/), a toolkit for assembling astronomical images, to drizzle all frames and construct galaxy images. The angular scale of the output images is 0.4''/pixel. Our data acquisition pipeline is available [online](https://github.com/ekourkchi/SDSS\_get). For the task of manual labeling we presented images to users in 512x512 resolution. For the task of generating and testing multiple ML models, we degrade the resolution of images to 128x128. This allows us to make the project feasible given the available resources.
  
  
 ###  2.3. <a name='ImageAugmentation'></a>Image Augmentation
