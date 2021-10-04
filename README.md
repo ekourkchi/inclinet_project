@@ -217,7 +217,7 @@ With 128x128 images, and adding augmentation, the size of the required memory to
 ####  4.1.4. <a name='Pros'></a>Pros
  
 - We can generate as many training galaxies as required without being worried about the memory size
-- We can stop the training process at any point and continue the process from where it is left. This helps is the process crashes due to the lack of enough memory that happens if other irrelevant processes clutter the system
+- We can stop the training process at any point and continue the process from where it is left. This helps if the process crashes due to the lack of enough memory that happens if other irrelevant processes clutter the system
 - We are able to constantly monitor the training process and make decisions as it advances
 
  
@@ -282,7 +282,7 @@ We evaluate the performance of models based on the accuracy of their predictions
 
 The root mean square of the prediction-measurements differences is <img src="https://render.githubusercontent.com/render/math?math=\sim 4^o">. The similar metric is <img src="https://render.githubusercontent.com/render/math?math=\sim 2.6^o"> when we compare the measured values of two groups of the human users. This means our model performs slightly worse than human, and most of that poor performance is attributed to the outliers and ano,aly features such as data noise, point sources, stellar spikes, poor images, etc. with not enough instances in the data sample to have significant influence on the trained network.
  
-In a similar way, Fig. 12 compares the performances of all models. As seen, in almost all cases the prediction bias (the slope of the red line) is at minimum and not that significant. Each panel displays the results of one model, and is labeled with the name of the corresponding model. RMS and MAE denote “Root Mean Square” and “Mean Absolute Error” of the deviations of <img src="https://render.githubusercontent.com/render/math?math=\Delta i"> about zero. At first glance, `Model5` seems to have the best performance, which does not come as a surprise, because it is the most complicated model, in terms of the number of free parameters. In general, the differences in the performances is not that significant.
+In a similar way, Fig. 12 compares the performances of all models. As seen, in almost all cases the prediction bias (the slope of the red line) is at minimum and not that significant. Each panel displays the results of one model, and is labeled with the name of the corresponding model. RMS and MAE denote “Root Mean Square” and “Mean Absolute Error” of the deviations of <img src="https://render.githubusercontent.com/render/math?math=\Delta i"> about zero. At first glance, `Model5` seems to have the best performance, which does not come as a surprise, because it is the most complicated model, in terms of the number of free parameters. In general, the differences in the performances are not that significant.
  
 ![Fig12](https://user-images.githubusercontent.com/13570487/135532635-2afc04c5-d7b5-43e0-9c6f-25d1c5e62454.png)
  
@@ -346,7 +346,7 @@ Averaging out the evaluated labels does make significant improvements, however `
 
 In this project, we trained three different convolutional neural networks (CNN) to automatically evaluate the inclination of the spiral galaxies. The performance of both classification and regression approaches have been extensively explored in the [prototyping stage](#Footnote), where we conclude that all of the CNN models that end with a regression layer exhibit better performances.
 
-[Our exploratory data analysis](https://github.com/ekourkchi/inclinet_project/blob/main/data_extraction/incNET_dataClean.ipynb) reveals that the distribution of labels (inclinations) is not uniform. Although leveraging the `relu` function for the activation of the last layer results in building good models, an inclination dependent bias is evident when we plot the discrepancies between the measured and predicted inclinations. We attributed this to the non-uniform distribution of inclinations and the fact that inclinations span a finite range of numbers between 45 and 90 degrees.
+[Our exploratory data analysis](https://github.com/ekourkchi/inclinet_project/blob/main/data_extraction/incNET_dataClean.ipynb) reveals that the distribution of labels (inclinations) is not uniform. Although leveraging the `tanh` function for the activation of the last layer results in building good models, an inclination dependent bias is evident when we plot the discrepancies between the measured and predicted inclinations. We attributed this to the non-uniform distribution of inclinations and the fact that inclinations span a finite range of numbers between 45 and 90 degrees.
 
 We modified our models by changing the activation of the last layer to `Tanh`. We normalized images and linearly adjusted inclination to be compatible with the `Tanh` output that ranges from -1 to 1. Although the bias is still evident, the convergence is achieved more quickly. Further tests seem to be necessary to make a concrete conclusion here.
 
@@ -354,7 +354,7 @@ We repeated the training process of the same CNNs (with `Tanh` output layer) by 
 
 Using smaller batch sizes and training models with more iterations helped to minimize the bias. However, part of the bias that originates from the finite coverage of the inclinations could not be entirely removed.
 
-Ultimately, this analysis recommends us to invoke the regression methodology to get more precise results. To minimize the bias, the labels of the training sample must be relatively and `Tanh`  helps with having better convergence rates through generating outputs in a finite range.
+Ultimately, this analysis recommends us to invoke the regression methodology to get more precise results. To minimize the bias, the labels of the training sample must be relatively uniform and `Tanh`  helps with having better convergence rates through generating outputs in a finite range.
 
 
 <a name='Footnote'></a>**Footnote:**
