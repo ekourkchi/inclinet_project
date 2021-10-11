@@ -1,7 +1,5 @@
 # IncliNET
 
-![inclinet_logo](https://user-images.githubusercontent.com/13570487/134275660-2585ec68-0744-4ad0-b02c-05ddb51bd9e4.png)
-
 1. [Introduction](#Introduction)
 2. [Data Preparation](#DataPreparation)
 	* 2.1. [Inclination Labels](#InclinationLabels)
